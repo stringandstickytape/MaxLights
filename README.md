@@ -29,6 +29,8 @@ Any LIFX devices detected on your LAN will be shown automatically.  If "Enable P
 
 You can use the Load and Save Diagram buttons on the Desktop UI to load and save the current state of MaxLights.  When loading a diagram that references unavailable lights (for instance, if the diagram was prepared on a different PC), MaxLights will pop a window asking you to pick a replacement light that *does* exist.  You can use the "Load and Remap Diagram" button to remap *all* the lights in a diagram.
 
+Each device listed has a "Monitor" button. Clicking this button will make any values sent to that device, appear in the Desktop UI above the devices list, and incur an enormous performance penalty in so doing.
+
 # Web UI
 Diagrams for effects are created through a web UI, to allow for easy visual programming.  Click the "Launch Web UI" button to launch the UI.
 
