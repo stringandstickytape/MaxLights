@@ -54,9 +54,14 @@ Your diagram should now look something like this:
 
 * Sound responsive
 
-The following diagram will make the first ten LEDs on a device, react to a range of frequencies in the audio output.  Auto Gain is used to ensure a full range of hues.
+The following diagram will make the first ten LEDs on a device, react to a range of frequencies in the audio output.  Auto Gain is used to ensure a full range of hues.  You could also use one of the expand functions to make this into ten colour areas across a larger range of LEDs.
 
 ![6](https://user-images.githubusercontent.com/4246218/149528999-5a2079ec-0e77-4ffe-98c6-a78865e7bc43.png)
+
+The following diagram will set the first 100 LEDs on a device to a random colour, on every beat of the currently-playing music:
+
+![7](https://user-images.githubusercontent.com/4246218/149529717-f18de62a-4e24-4a7d-b62a-f036b6ef302c.png)
+
 
 # Readme TODO:
 * Adding WLED devices manually
