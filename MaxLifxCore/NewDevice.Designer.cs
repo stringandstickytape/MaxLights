@@ -67,7 +67,6 @@ namespace MaxLifxCore
             // 
             this.cbDeviceType.FormattingEnabled = true;
             this.cbDeviceType.Items.AddRange(new object[] {
-            "Lifx",
             "WLED"});
             this.cbDeviceType.Location = new System.Drawing.Point(156, 45);
             this.cbDeviceType.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

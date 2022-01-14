@@ -38,7 +38,7 @@ namespace MaxLifxCore
 
         public Bitmap bitmap { get; set; }
 
-        public readonly decimal Version = 0.3m;
+        public readonly decimal Version = 0.4m;
 
         public Form1()
         {
@@ -465,6 +465,11 @@ namespace MaxLifxCore
         {
             // Life is short.
             Environment.Exit(0);
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(((System.Windows.Forms.LinkLabel)sender).Text) { UseShellExecute = true });
         }
 
         //private void button5_Click(object sender, EventArgs e)
