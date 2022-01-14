@@ -72,4 +72,5 @@ The following diagram will take 300 screen samples in a line down the left-hand-
 
 # Readme TODO:
 * Adding WLED devices manually
+* Acknowledgements for the various genuises upon whose work, MaxLights is built
 
