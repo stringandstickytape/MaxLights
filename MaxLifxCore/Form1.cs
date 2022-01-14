@@ -1,6 +1,8 @@
 ﻿using MaxLifxCore;
 using MaxLifxCore.Controls;
 using MaxLifxCoreBulbController.Controllers;
+using MaxLifxCoreBulbController.Payload;
+using MaxLights;
 using Microsoft.CSharp;
 using Newtonsoft.Json;
 using RGB.NET.Core;
@@ -23,6 +25,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -38,7 +41,7 @@ namespace MaxLifxCore
 
         public Bitmap bitmap { get; set; }
 
-        public readonly decimal Version = 0.7m;
+        public readonly decimal Version = 0.8m;
 
         public Form1()
         {
@@ -255,11 +258,25 @@ namespace MaxLifxCore
                     var button = new Button { Text = "Delete", Tag = l, Location = new System.Drawing.Point { X = indivLumPanel.Width / 6 * 5, Y = 0 }, Width = indivLumPanel.Width / 12, Height = 36 };
                     button.Click += DeleteLuminaireClicked;
                     indivLumPanel.Controls.Add(button);
+                } else 
+                if(l is LifxDevice)
+                {
+                    var button3 = new Button { Text = "Control", Tag = l, Location = new System.Drawing.Point { X = indivLumPanel.Width / 6 * 5, Y = 0 }, Width = indivLumPanel.Width / 12, Height = 36 };
+                    button3.Click += ControlLifxLuminarieClicked;
+                    indivLumPanel.Controls.Add(button3);
                 }
+
                 var button2 = new Button { Text = "Monitor", Tag = l, Location = new System.Drawing.Point { X = indivLumPanel.Width / 12 * 11, Y = 0 }, Width = indivLumPanel.Width / 12, Height = 36 };
                 button2.Click += MonitorLuminaireClicked;
                 indivLumPanel.Controls.Add(button2);
             }
+        }
+
+        private void ControlLifxLuminarieClicked(object? sender, EventArgs e)
+        {
+            LifxDevice l = (LifxDevice)(((Button)sender).Tag);
+            var f = new LifxControl(l, Controller);
+            f.Show();
         }
 
         private void MonitorLuminaireClicked(object? sender, EventArgs e)
