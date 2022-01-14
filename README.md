@@ -32,6 +32,14 @@ If no diagram is currently loaded, the Web UI will look something like this:
 
 ![3](https://user-images.githubusercontent.com/4246218/149527371-5b0a5ffb-1fcd-4de6-9bfa-d2a638eef06e.png)
 
+To create a basic effect:
+
+1) Right-click some whitespace to pop the functions menu (note the search box at the top):
+
+<img width="338" alt="4" src="https://user-images.githubusercontent.com/4246218/149527635-36ec704c-f2d2-4772-b3e6-e368a50bf482.png">
+
+
+
 
 # Readme TODO:
 * Adding WLED devices manually
