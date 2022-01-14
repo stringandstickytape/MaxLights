@@ -38,8 +38,25 @@ To create a basic effect:
 
 <img width="338" alt="4" src="https://user-images.githubusercontent.com/4246218/149527635-36ec704c-f2d2-4772-b3e6-e368a50bf482.png">
 
+2) Add a Number-To-List function.  Set its Item to 65535 (the maximum value for hue, saturation or brightness), and set its Items to Generate to 1.  
 
+3) Connect the Number-To-List output "List of Numbers" to the Hue, Saturation and Brightness inputs of your chosen device.  
 
+4) Connect your chosen device's Rendered Light output to the Renderer.  THIS IS CRITICAL - lights not connected to the renderer will not render (!), and indeed will not even be uploaded from client to server.
+
+Your diagram should now look something like this:
+
+![5](https://user-images.githubusercontent.com/4246218/149528185-f04fff7a-12a3-41cd-999a-d8cda0ec8c84.png)
+
+5) Now upload the diagram.  The first LED on the device you selected, should turn red, because we have set hue to 65535 (red), and saturation and brightness to 65535 (maximum).
+
+# Examples
+
+* Sound responsive
+
+The following diagram will make the first ten LEDs on a device, react to a range of frequencies in the audio output.  Auto Gain is used to ensure a full range of hues.
+
+![6](https://user-images.githubusercontent.com/4246218/149528999-5a2079ec-0e77-4ffe-98c6-a78865e7bc43.png)
 
 # Readme TODO:
 * Adding WLED devices manually
