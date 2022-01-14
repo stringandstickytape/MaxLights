@@ -55,7 +55,7 @@ Your diagram should now look something like this:
 
 ![5](https://user-images.githubusercontent.com/4246218/149528185-f04fff7a-12a3-41cd-999a-d8cda0ec8c84.png)
 
-5) Now upload the diagram.  The first LED on the device you selected, should turn red, because we have set hue to 65535 (red), and saturation and brightness to 65535 (maximum).
+5) Now click "Upload" to upload the diagram to MaxLIghts.  The first LED on the device you selected, should turn red, because we have set hue to 65535 (red), and saturation and brightness to 65535 (maximum).
 
 # Adding a WLED device manually
 
