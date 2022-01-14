@@ -27,6 +27,8 @@ On startup, MaxLights presents the following window:
 
 Any LIFX devices detected on your LAN will be shown automatically.  If "Enable PC Hardware Support" is ticked, there will be a ten-second delay on startup, and any detected devices will be listed.  WLED devices must be added manually (see below).
 
+You can use the Load and Save Diagram buttons on the Desktop UI to load and save the current state of MaxLights.  When loading a diagram that references unavailable lights (for instance, if the diagram was prepared on a different PC), MaxLights will pop a window asking you to pick a replacement light that *does* exist.  You can use the "Load and Remap Diagram" button to remap *all* the lights in a diagram.
+
 # Web UI
 Diagrams for effects are created through a web UI, to allow for easy visual programming.  Click the "Launch Web UI" button to launch the UI.
 
