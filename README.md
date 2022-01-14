@@ -11,6 +11,7 @@ MaxLights uses drag-and-drop functions, which combine to create effects.  The fo
 * Drag-and-drop functions which combine to create effects
 * Audio, Screen, Keyboard reactivity
 * More functions than you can shake a weirdly antialiased stick at
+- developers can add functions simply by adding a new class, which will be discovered at runtime via reflection.  Add.cs is a good example of a simple such function.
 
 # Installation
 1) Download the latest release from https://github.com/stringandstickytape/MaxLights/releases .
