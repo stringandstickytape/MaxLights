@@ -68,7 +68,15 @@ The following diagram will take 300 screen samples in a line down the left-hand-
 
 ![8](https://user-images.githubusercontent.com/4246218/149530248-86e7ed4e-ec87-4346-980f-586992d79fb8.png)
 
+The following diagram will take ten screen samples from *each* side of monitor 0, combine them into a list of twenty samples, shuffle that list, then send the first ten to one device and the remainder to another device (!) :
 
+<img width="1005" alt="9" src="https://user-images.githubusercontent.com/4246218/149531414-27cdfcd6-26fd-4f46-9d40-3d260dacf328.png">
+
+* Keyboard response
+
+The following diagram will set the first three LEDs of the selected device, to red.  When a key is pressed, the colour will change to a hue based on the code of the key pressed:
+
+<img width="809" alt="10" src="https://user-images.githubusercontent.com/4246218/149535297-395ab799-b5eb-4fb5-b495-8df22cf0ed3d.png">
 
 # Readme TODO:
 * Adding WLED devices manually
