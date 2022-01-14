@@ -62,6 +62,13 @@ The following diagram will set the first 100 LEDs on a device to a random colour
 
 ![7](https://user-images.githubusercontent.com/4246218/149529717-f18de62a-4e24-4a7d-b62a-f036b6ef302c.png)
 
+* Screen Responsive ("Ambilight")
+
+The following diagram will take 300 screen samples in a line down the left-hand-side of monitor 0, and send them to the chosen device.  Values were calculated by using the 3840x2160 helper button - but you must set Monitor manually.  Note the use of "HSB" as an alternative to separate H/S/B connections:
+
+![8](https://user-images.githubusercontent.com/4246218/149530248-86e7ed4e-ec87-4346-980f-586992d79fb8.png)
+
+
 
 # Readme TODO:
 * Adding WLED devices manually
