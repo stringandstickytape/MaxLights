@@ -9,10 +9,11 @@ MaxLights uses drag-and-drop functions, which combine to create effects.  The fo
 # Features
 * Send lighting effects to LIFX, WLED and RGB.Net (Corsair/MSI/Logitech/ASUS) devices
 * Drag-and-drop functions which combine to create effects
+* Supports single- and multi-LED devices
 * Audio, Screen, Keyboard reactivity
 * More functions than you can shake a weirdly antialiased stick at
 
-Any interested C# developer can add functions simply by adding a new class, which will be discovered at runtime via reflection.  Add.cs is a good example of such a function.
+Any interested C# developer can add functions simply by adding a new class, which will be discovered at runtime via reflection.  Add.cs is a good example of such a function.  Suggestions for useful or fun functions are actively solicited; please raise a GitHub issue.
 
 # Installation
 1) Download the latest release from https://github.com/stringandstickytape/MaxLights/releases .
