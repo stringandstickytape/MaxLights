@@ -52,6 +52,12 @@ Your diagram should now look something like this:
 
 5) Now upload the diagram.  The first LED on the device you selected, should turn red, because we have set hue to 65535 (red), and saturation and brightness to 65535 (maximum).
 
+# Adding a WLED device manually
+
+Hit "Add Device", and enter the IP address, WLED Broadcast port and number of LEDs for the WLED device you want to control.  The WLED Broadcast port can be found in WLED -> Settings -> Sync Interfaces -> WLED Broadcast -> UDP Port.
+
+<img width="242" alt="11" src="https://user-images.githubusercontent.com/4246218/149550472-32586fd9-44c5-4631-9f26-879463e12e1f.png">
+
 # Examples
 
 * Sound responsive
