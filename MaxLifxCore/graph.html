@@ -1,0 +1,1854 @@
+﻿<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>MaxLifx2</title>
+
+    <style>
+        @charset "UTF-8";
+
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        #rete {
+            height: 100%;
+        }
+
+        .node-editor {
+            overflow: hidden;
+        }
+
+            .node-editor * {
+                box-sizing: border-box;
+            }
+
+            .node-editor .node {
+                background: rgba(110, 136, 255, 0.8);
+                box-shadow: 1px solid black;
+                border: 1px solid black;
+                border-radius: 10px;
+                cursor: pointer;
+                display: inline-block;
+                height: auto;
+                padding-bottom: 6px;
+                box-sizing: content-box;
+                box-shadow: 4px 5px 9px rgba(0, 0, 0, 0.5);
+                min-width: 170px;
+            }
+
+                .node-editor .node:hover {
+                    background: rgba(110, 136, 255, 1);
+                }
+
+                .node-editor .node.active {
+                    background: rgba(22, 22, 22, 0.7);
+                    border: 1px solid #ffd252;
+                }
+
+
+
+                .node-editor .node .title {
+                    border-bottom: 1px solid #000;
+                    background:white;
+                    color: black !important;
+                    text-align: left;
+                    font-weight: bold;
+                    font-family: sans-serif;
+                    font-size: 10px !important;
+                    border-radius: 0px 0px 0 0;
+                    padding: 2px;
+                    overflow: hidden;
+                }
+
+                .label {
+                    font-size:16px;
+                    line-height:20px;
+                }
+
+                .node-editor .node .content {
+                    display: table;
+                    width: 100%;
+                }
+
+                    .node-editor .node .content .col {
+                        display: table-cell;
+                        white-space: nowrap;
+                    }
+
+                        .node-editor .node .content .col:not(:last-child) {
+                            padding-right: 20px;
+                        }
+
+                .node-editor .node .socket {
+                    display: inline-block;
+                    cursor: pointer;
+                    border: 2px solid white;
+                    border-radius: 8px;
+                    width: 16px;
+                    height: 16px;
+                    margin: 7px !important;
+                    vertical-align: middle;
+                    background: transparent;
+                    position: relative;
+                    z-index: 2;
+                }
+
+                    .node-editor .node .socket.used {
+                        background: white;
+                    }
+
+                    .node-editor .node .socket:after {
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        top: 3px;
+                        left: 16px;
+                        display: inline-block;
+                        border-style: solid;
+                        border-width: 4px 0 4px 2.6666666667px;
+                        border-color: transparent transparent transparent white;
+                    }
+
+                    .node-editor .node .socket:hover {
+                        border: 2px solid #777;
+                    }
+
+                    .node-editor .node .socket.multiple {
+                        border-color: yellow;
+                    }
+
+                .node-editor .node .input-title, .node-editor .node .output-title {
+                    vertical-align: middle;
+                    color: white;
+                    display: inline-block;
+                    font-family: sans-serif;
+                    font-size: 10px;
+                    margin: 10px 0;
+                    line-height: 16px;
+                }
+
+                .node-editor .node .input-control {
+                    z-index: 1;
+                    vertical-align: middle;
+                    display: inline-block;
+                }
+
+                .node-editor .node .control:first-child:not(.tooltip) {
+
+                }
+
+                .node-editor .node .control input {
+                }
+
+                .node-editor .connection path {
+                    fill: none;
+                    stroke: #000;
+                    stroke-width: 2px;
+                    pointer-events: none;
+                }
+
+                .node-editor .connection path.active {
+                    stroke: #aaa;
+                }
+
+        .NumberControl > input, .FloatControl > input {
+            background-color: white !important;
+            color: black !important;
+            font-size:10px;
+            width: 120px !important;
+        }
+
+        .InfoControl,.StringInput {
+            color: black !important;
+            font-weight: normal;
+            font-size:10px;
+        }
+
+            .InfoControl > .StringInput {
+                margin-top: 2px;
+            }
+
+        .StringInput {
+            border: none;
+        }
+
+
+        .NumberControl, .FloatControl {
+            font-family: sans-serif;
+            color: black !important;
+        }
+
+        
+
+        .number {
+            background-color:palevioletred !important;
+        }
+
+        .Float {
+            background-color: forestgreen !important;
+        }
+
+        .HSB {
+            background-color: orange !important;
+        }
+
+        .string-value {
+            background-color: palegreen !important;
+        }
+        .rendered-light {
+            background-color: gray !important;
+        }
+
+        .boolean {
+            background-color:dimgrey !important;
+        }
+
+        input[type="checkbox"]{
+            width:auto !important;
+        }
+
+        .input-title,.output-title {
+            color: black !important;
+            font-size:10px !important;
+            margin: 0 !important;
+        }
+
+        .node, .node.renderer, .node-editor .node .title {
+            border-radius: 0px !important;
+            font-family: sans-serif;
+            color: black !important;
+            font-size:10px;
+        }
+
+        .node-editor .node .title {
+            font-family: sans-serif !important;
+            padding: 4px !important;
+        }
+            .connection {
+            color: #000 !important;
+        }
+
+
+            .node-editor .node select, .node-editor .node input {
+            }
+
+        .context-menu > .item, .context-menu > .item > .subitems > .item, .context-menu > .search, .context-menu > .search > input {
+            background-color: white !important;
+            color: black !important;
+            font-family: sans-serif !important;
+            font-size: 10px !important;
+            border: 1px solid black !important;
+            border-radius: 0px !important;
+            font-weight:normal !important;
+        }
+
+            .context-menu > .item, .context-menu > .search {
+                width: 180px !important;
+            }
+
+        .context-menu > .hasSubitems {
+            font-weight: bold !important;
+            background-color: cornsilk !important;
+        }
+
+        .context-menu > .item:hover, .context-menu > .item > .subitems > .item:hover {
+            background-color: darksalmon !important;
+        }
+
+                .context-menu {
+                    left: 0;
+                    top: 0;
+                    position: absolute;
+                    padding: 10px;
+                    margin-top: -20px;
+                }
+
+            .context-menu > .item {
+                margin-left: -80%;
+            }
+
+                .context-menu > .item .subitems {
+                    position: absolute;
+                    display: none;
+                    left: 100%;
+                    top: 0;
+                    overflow: overlay;
+                }
+
+                .context-menu > .item:hover .subitems {
+                    display: block;
+                }
+
+                .context-menu > .item.have-subitems {
+                    padding-right: 16px;
+                }
+
+                    .context-menu > .item.have-subitems:after {
+                        content: "►";
+                        position: absolute;
+                        opacity: 0.6;
+                        right: 5px;
+                        top: 5px;
+                    }
+
+            .context-menu .item {
+                padding: 4px;
+                border-bottom: 1px solid rgba(15, 15, 15, 0.7);
+                color: #fff;
+                background-color: white;
+                cursor: pointer;
+                width: 100px;
+                position: relative;
+            }
+
+                .context-menu .item:first-child {
+                    border-radius: 7px 7px 0 0;
+                }
+
+                .context-menu .item:last-child {
+                    border-radius: 0 0 7px 7px;
+                }
+
+                .context-menu .item:hover {
+                    background-color: rgba(45, 45, 45, 0.7);
+                }
+
+        window.console = window.console || function (t) { };
+
+        if (document.location.search.match(/type=embed/gi)) {
+            window.parent.postMessage("resize", "*");
+        }
+
+
+        [al-cloak], [hidden], .al-hide {
+            display: none !important;
+        }
+
+        .connection {
+            overflow: visible !important;
+            position: absolute;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+            .connection > * {
+                pointer-events: all;
+            }
+
+            .connection .main-path {
+                fill: none;
+                stroke-width: 5px;
+                stroke: steelblue;
+            }
+
+
+        .context-menu {
+            left: 0;
+            top: 0;
+            position: fixed;
+            padding: 10px;
+            margin-top: -20px;
+        }
+
+            .context-menu > .item {
+                margin-left: 0;
+                padding-right: 16px;
+            }
+
+                .context-menu > .item .subitems {
+                    position: absolute;
+                    display: none;
+                    left: 100%;
+                    top: 0;
+                    overflow: overlay;
+                }
+
+                .context-menu > .item:hover .subitems {
+                    display: block;
+                }
+
+                .context-menu > .item.have-subitems:after {
+                    content: '►';
+                    position: absolute;
+                    opacity: 0.6;
+                    right: 5px;
+                    top: 5px;
+                }
+
+            .context-menu .search input {
+                color: white;
+                padding: 1px 8px;
+                border: 1px solid white;
+                border-radius: 10px;
+                font-size: 16px;
+                font-family: serif;
+                width: 100%;
+                box-sizing: border-box;
+                background: transparent;
+            }
+
+            .context-menu .item {
+                padding: 4px;
+                border-bottom: 1px solid rgba(69, 103, 255, 0.8);
+                color: #fff;
+                cursor: pointer;
+                width: 100px;
+                position: relative;
+            }
+
+                .context-menu .item:first-child {
+                    border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;
+                }
+
+                .context-menu .item:last-child {
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                }
+
+                .context-menu .item:hover {
+                    background-color: rgba(130, 153, 255, 0.8);
+                }
+
+        .buttonbar {
+            position: absolute;
+            margin: 5px;
+        }
+
+        .output {
+            text-align: right;
+        }
+
+        [al-cloak], [hidden], .al-hide {
+            display: none !important;
+        }
+
+        .title .tooltiptext {
+            visibility: hidden;
+            width: 170px;
+            background-color: white;
+            color:black;
+            text-align: center;
+            border-radius: 1px;
+            /* Position the tooltip text - see examples below! */
+            position: absolute;
+            z-index: 99;
+            border: 1px solid black;
+            box-sizing: content-box;
+            font-size:10px;
+            font-weight:normal;
+        }
+
+        .title:hover .tooltiptext {
+            visibility: visible;
+        }
+
+
+    </style>
+</head>
+
+<body translate="no">
+
+    <div class="buttonbar">
+        <button onclick="clickArrange()">Arrange</button>
+        <button onclick="clickUpload()">Upload</button>
+        <div>
+            Add inline comment: Shift - C<br />
+            Add frame comment: CTRL-select nodes, Shift - F<br />
+            Delete comment: Select comment and press Delete<br />
+            Edit comment: Right-click comment<br />
+            <div>###MonitorInfo###</div>
+        </div>
+    </div>
+
+    
+
+    <div id="ReturnMessage" style=" position: fixed; bottom: 0; font-size: 16; font-family: sans-serif; background: yellow; padding: 10px; border-top: 1px solid black; width: 100%; display:none;"></div>
+
+    <div id="rete" class="node-editor" style="overflow: hidden; touch-action: none; width: 1345px; height: 835px;" />
+
+    <script src="https://cdn.jsdelivr.net/npm/rete@1.4.4/build/rete.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.6/vue.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/rete-vue-render-plugin@0.3.5/build/vue-render-plugin.min.js"></script> causes custom nodes to fail? -->
+    <script src="https://cdn.jsdelivr.net/npm/rete-vue-render-plugin@0.2.6/build/vue-render-plugin.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/rete-connection-plugin@0.8.3-rc.1/build/connection-plugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alight@0.14.1/alight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/rete-context-menu-plugin@0.5.2/build/context-menu-plugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/rete-area-plugin@0.2.1/build/area-plugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/rete-history-plugin@0.1.0/build/history-plugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/rete-connection-mastery-plugin@0.1.0/build/connection-mastery-plugin.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/rete-connection-mastery-plugin"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/rete-comment-plugin@0.7.0-rc.1/build/comment-plugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/rete-minimap-plugin@0.3.1/build/minimap-plugin.min.js"></script>
+    <!-- auto arrangee<script src="https://cdn.jsdelivr.net/npm/rete-auto-arrange-plugin@0.4.0/build/auto-arrange-plugin.min.js"></script>-->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
+
+    <script>
+
+
+        /*!
+        * rete-auto-arrange-plugin v0.4.0
+        * (c) 2019 Vitaliy Stoliarov
+        * Released under the MIT license.
+        */
+        /*!
+        * rete-auto-arrange-plugin v0.4.0
+        * (c) 2019 Vitaliy Stoliarov
+        * Released under the MIT license.
+        */
+        var runtime = function (i) {
+            "use strict";
+            var c, t = Object.prototype, l = t.hasOwnProperty, e = "function" == typeof Symbol ? Symbol : {}, o = e.iterator || "@@iterator", r = e.asyncIterator || "@@asyncIterator", n = e.toStringTag || "@@toStringTag";
+            function a(t, e, r, n) {
+                var o = e && e.prototype instanceof u ? e : u
+                    , i = Object.create(o.prototype)
+                    , a = new j(n || []);
+                return i._invoke = function (i, a, u) {
+                    var c = s;
+                    return function (t, e) {
+                        if (c === d)
+                            throw new Error("Generator is already running");
+                        if (c === y) {
+                            if ("throw" === t)
+                                throw e;
+                            return S()
+                        }
+                        for (u.method = t,
+                            u.arg = e; ;) {
+                            var r = u.delegate;
+                            if (r) {
+                                var n = E(r, u);
+                                if (n) {
+                                    if (n === p)
+                                        continue;
+                                    return n
+                                }
+                            }
+                            if ("next" === u.method)
+                                u.sent = u._sent = u.arg;
+                            else if ("throw" === u.method) {
+                                if (c === s)
+                                    throw c = y,
+                                    u.arg;
+                                u.dispatchException(u.arg)
+                            } else
+                                "return" === u.method && u.abrupt("return", u.arg);
+                            c = d;
+                            var o = h(i, a, u);
+                            if ("normal" === o.type) {
+                                if (c = u.done ? y : f,
+                                    o.arg === p)
+                                    continue;
+                                return {
+                                    value: o.arg,
+                                    done: u.done
+                                }
+                            }
+                            "throw" === o.type && (c = y,
+                                u.method = "throw",
+                                u.arg = o.arg)
+                        }
+                    }
+                }(t, r, a),
+                    i
+            }
+            function h(t, e, r) {
+                try {
+                    return {
+                        type: "normal",
+                        arg: t.call(e, r)
+                    }
+                } catch (t) {
+                    return {
+                        type: "throw",
+                        arg: t
+                    }
+                }
+            }
+            i.wrap = a;
+            var s = "suspendedStart"
+                , f = "suspendedYield"
+                , d = "executing"
+                , y = "completed"
+                , p = {};
+            function u() { }
+            function v() { }
+            function g() { }
+            var m = {};
+            m[o] = function () {
+                return this
+            }
+                ;
+            var w = Object.getPrototypeOf
+                , x = w && w(w(O([])));
+            x && x !== t && l.call(x, o) && (m = x);
+            var b = g.prototype = u.prototype = Object.create(m);
+            function L(t) {
+                ["next", "throw", "return"].forEach(function (e) {
+                    t[e] = function (t) {
+                        return this._invoke(e, t)
+                    }
+                })
+            }
+            function _(c) {
+                var e;
+                this._invoke = function (r, n) {
+                    function t() {
+                        return new Promise(function (t, e) {
+                            !function e(t, r, n, o) {
+                                var i = h(c[t], c, r);
+                                if ("throw" !== i.type) {
+                                    var a = i.arg
+                                        , u = a.value;
+                                    return u && "object" == typeof u && l.call(u, "__await") ? Promise.resolve(u.__await).then(function (t) {
+                                        e("next", t, n, o)
+                                    }, function (t) {
+                                        e("throw", t, n, o)
+                                    }) : Promise.resolve(u).then(function (t) {
+                                        a.value = t,
+                                            n(a)
+                                    }, function (t) {
+                                        return e("throw", t, n, o)
+                                    })
+                                }
+                                o(i.arg)
+                            }(r, n, t, e)
+                        }
+                        )
+                    }
+                    return e = e ? e.then(t, t) : t()
+                }
+            }
+            function E(t, e) {
+                var r = t.iterator[e.method];
+                if (r === c) {
+                    if (e.delegate = null,
+                        "throw" === e.method) {
+                        if (t.iterator.return && (e.method = "return",
+                            e.arg = c,
+                            E(t, e),
+                            "throw" === e.method))
+                            return p;
+                        e.method = "throw",
+                            e.arg = new TypeError("The iterator does not provide a 'throw' method")
+                    }
+                    return p
+                }
+                var n = h(r, t.iterator, e.arg);
+                if ("throw" === n.type)
+                    return e.method = "throw",
+                        e.arg = n.arg,
+                        e.delegate = null,
+                        p;
+                var o = n.arg;
+                return o ? o.done ? (e[t.resultName] = o.value,
+                    e.next = t.nextLoc,
+                    "return" !== e.method && (e.method = "next",
+                        e.arg = c),
+                    e.delegate = null,
+                    p) : o : (e.method = "throw",
+                        e.arg = new TypeError("iterator result is not an object"),
+                        e.delegate = null,
+                        p)
+            }
+            function k(t) {
+                var e = {
+                    tryLoc: t[0]
+                };
+                1 in t && (e.catchLoc = t[1]),
+                    2 in t && (e.finallyLoc = t[2],
+                        e.afterLoc = t[3]),
+                    this.tryEntries.push(e)
+            }
+            function N(t) {
+                var e = t.completion || {};
+                e.type = "normal",
+                    delete e.arg,
+                    t.completion = e
+            }
+            function j(t) {
+                this.tryEntries = [{
+                    tryLoc: "root"
+                }],
+                    t.forEach(k, this),
+                    this.reset(!0)
+            }
+            function O(e) {
+                if (e) {
+                    var t = e[o];
+                    if (t)
+                        return t.call(e);
+                    if ("function" == typeof e.next)
+                        return e;
+                    if (!isNaN(e.length)) {
+                        var r = -1
+                            , n = function t() {
+                                for (; ++r < e.length;)
+                                    if (l.call(e, r))
+                                        return t.value = e[r],
+                                            t.done = !1,
+                                            t;
+                                return t.value = c,
+                                    t.done = !0,
+                                    t
+                            };
+                        return n.next = n
+                    }
+                }
+                return {
+                    next: S
+                }
+            }
+            function S() {
+                return {
+                    value: c,
+                    done: !0
+                }
+            }
+            return v.prototype = b.constructor = g,
+                g.constructor = v,
+                g[n] = v.displayName = "GeneratorFunction",
+                i.isGeneratorFunction = function (t) {
+                    var e = "function" == typeof t && t.constructor;
+                    return !!e && (e === v || "GeneratorFunction" === (e.displayName || e.name))
+                }
+                ,
+                i.mark = function (t) {
+                    return Object.setPrototypeOf ? Object.setPrototypeOf(t, g) : (t.__proto__ = g,
+                        n in t || (t[n] = "GeneratorFunction")),
+                        t.prototype = Object.create(b),
+                        t
+                }
+                ,
+                i.awrap = function (t) {
+                    return {
+                        __await: t
+                    }
+                }
+                ,
+                L(_.prototype),
+                _.prototype[r] = function () {
+                    return this
+                }
+                ,
+                i.AsyncIterator = _,
+                i.async = function (t, e, r, n) {
+                    var o = new _(a(t, e, r, n));
+                    return i.isGeneratorFunction(e) ? o : o.next().then(function (t) {
+                        return t.done ? t.value : o.next()
+                    })
+                }
+                ,
+                L(b),
+                b[n] = "Generator",
+                b[o] = function () {
+                    return this
+                }
+                ,
+                b.toString = function () {
+                    return "[object Generator]"
+                }
+                ,
+                i.keys = function (r) {
+                    var n = [];
+                    for (var t in r)
+                        n.push(t);
+                    return n.reverse(),
+                        function t() {
+                            for (; n.length;) {
+                                var e = n.pop();
+                                if (e in r)
+                                    return t.value = e,
+                                        t.done = !1,
+                                        t
+                            }
+                            return t.done = !0,
+                                t
+                        }
+                }
+                ,
+                i.values = O,
+                j.prototype = {
+                    constructor: j,
+                    reset: function (t) {
+                        if (this.prev = 0,
+                            this.next = 0,
+                            this.sent = this._sent = c,
+                            this.done = !1,
+                            this.delegate = null,
+                            this.method = "next",
+                            this.arg = c,
+                            this.tryEntries.forEach(N),
+                            !t)
+                            for (var e in this)
+                                "t" === e.charAt(0) && l.call(this, e) && !isNaN(+e.slice(1)) && (this[e] = c)
+                    },
+                    stop: function () {
+                        this.done = !0;
+                        var t = this.tryEntries[0].completion;
+                        if ("throw" === t.type)
+                            throw t.arg;
+                        return this.rval
+                    },
+                    dispatchException: function (r) {
+                        if (this.done)
+                            throw r;
+                        var n = this;
+                        function t(t, e) {
+                            return i.type = "throw",
+                                i.arg = r,
+                                n.next = t,
+                                e && (n.method = "next",
+                                    n.arg = c),
+                                !!e
+                        }
+                        for (var e = this.tryEntries.length - 1; 0 <= e; --e) {
+                            var o = this.tryEntries[e]
+                                , i = o.completion;
+                            if ("root" === o.tryLoc)
+                                return t("end");
+                            if (o.tryLoc <= this.prev) {
+                                var a = l.call(o, "catchLoc")
+                                    , u = l.call(o, "finallyLoc");
+                                if (a && u) {
+                                    if (this.prev < o.catchLoc)
+                                        return t(o.catchLoc, !0);
+                                    if (this.prev < o.finallyLoc)
+                                        return t(o.finallyLoc)
+                                } else if (a) {
+                                    if (this.prev < o.catchLoc)
+                                        return t(o.catchLoc, !0)
+                                } else {
+                                    if (!u)
+                                        throw new Error("try statement without catch or finally");
+                                    if (this.prev < o.finallyLoc)
+                                        return t(o.finallyLoc)
+                                }
+                            }
+                        }
+                    },
+                    abrupt: function (t, e) {
+                        for (var r = this.tryEntries.length - 1; 0 <= r; --r) {
+                            var n = this.tryEntries[r];
+                            if (n.tryLoc <= this.prev && l.call(n, "finallyLoc") && this.prev < n.finallyLoc) {
+                                var o = n;
+                                break
+                            }
+                        }
+                        o && ("break" === t || "continue" === t) && o.tryLoc <= e && e <= o.finallyLoc && (o = null);
+                        var i = o ? o.completion : {};
+                        return i.type = t,
+                            i.arg = e,
+                            o ? (this.method = "next",
+                                this.next = o.finallyLoc,
+                                p) : this.complete(i)
+                    },
+                    complete: function (t, e) {
+                        if ("throw" === t.type)
+                            throw t.arg;
+                        return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg,
+                            this.method = "return",
+                            this.next = "end") : "normal" === t.type && e && (this.next = e),
+                            p
+                    },
+                    finish: function (t) {
+                        for (var e = this.tryEntries.length - 1; 0 <= e; --e) {
+                            var r = this.tryEntries[e];
+                            if (r.finallyLoc === t)
+                                return this.complete(r.completion, r.afterLoc),
+                                    N(r),
+                                    p
+                        }
+                    },
+                    catch: function (t) {
+                        for (var e = this.tryEntries.length - 1; 0 <= e; --e) {
+                            var r = this.tryEntries[e];
+                            if (r.tryLoc === t) {
+                                var n = r.completion;
+                                if ("throw" === n.type) {
+                                    var o = n.arg;
+                                    N(r)
+                                }
+                                return o
+                            }
+                        }
+                        throw new Error("illegal catch attempt")
+                    },
+                    delegateYield: function (t, e, r) {
+                        return this.delegate = {
+                            iterator: O(t),
+                            resultName: e,
+                            nextLoc: r
+                        },
+                            "next" === this.method && (this.arg = c),
+                            p
+                    }
+                },
+                i
+        }("object" == typeof module ? module.exports : {});
+        try {
+            regeneratorRuntime = runtime
+        } catch (t) {
+            Function("r", "regeneratorRuntime = r")(runtime)
+        }
+        !function (t, e) {
+            "object" == typeof exports && "undefined" != typeof module ? e(exports) : "function" == typeof define && define.amd ? define(["exports"], e) : e((t = t || self).AutoArrangePlugin = {})
+        }(this, function (t) {
+            "use strict";
+            function i(t, e) {
+                if (!(t instanceof e))
+                    throw new TypeError("Cannot call a class as a function")
+            }
+            function n(t, e) {
+                for (var r = 0; r < e.length; r++) {
+                    var n = e[r];
+                    n.enumerable = n.enumerable || !1,
+                        n.configurable = !0,
+                        "value" in n && (n.writable = !0),
+                        Object.defineProperty(t, n.key, n)
+                }
+            }
+            function e(t, e, r) {
+                return e && n(t.prototype, e),
+                    r && n(t, r),
+                    t
+            }
+            function E(t) {
+                return function (t) {
+                    if (Array.isArray(t)) {
+                        for (var e = 0, r = new Array(t.length); e < t.length; e++)
+                            r[e] = t[e];
+                        return r
+                    }
+                }(t) || function (t) {
+                    if (Symbol.iterator in Object(t) || "[object Arguments]" === Object.prototype.toString.call(t))
+                        return Array.from(t)
+                }(t) || function () {
+                    throw new TypeError("Invalid attempt to spread non-iterable instance")
+                }()
+            }
+            var c = function () {
+                function t() {
+                    i(this, t),
+                        this._cols = []
+                }
+                return e(t, [{
+                    key: "add",
+                    value: function (t, e) {
+                        this._cols[t] || (this._cols[t] = []),
+                            this._cols[t].push(e)
+                    }
+                }, {
+                    key: "toArray",
+                    value: function () {
+                        var e = this;
+                        return Object.keys(this._cols).sort(function (t, e) {
+                            return +t - +e
+                        }).map(function (t) {
+                            return e._cols[t]
+                        })
+                    }
+                }]),
+                    t
+            }()
+                , l = function () {
+                    function t() {
+                        i(this, t),
+                            this._map = new WeakMap
+                    }
+                    return e(t, [{
+                        key: "track",
+                        value: function (t) {
+                            if (this._map.has(t))
+                                return !0;
+                            this._map.set(t, !0)
+                        }
+                    }]),
+                        t
+                }()
+                , h = function () {
+                    function o(t, e, r, n) {
+                        i(this, o),
+                            this.editor = t,
+                            this.margin = e,
+                            this.depth = r,
+                            this.vertical = n
+                    }
+                    return e(o, [{
+                        key: "getNodes",
+                        value: function (node, type = 'output') {
+                            const nodes = [];
+                            const key = `${type}s`;
+
+                            for (let io of node[key].values())
+                                for (let connection of io.connections.values())
+                                    nodes.push(connection[type === 'input' ? 'output' : 'input'].node);
+
+                            return nodes;
+                        }
+                    }, {
+                        key: "getNodesBoard",
+                        value: function (t, e, r, n) {
+                            var o = this
+                                , i = 1 < arguments.length && void 0 !== e ? e : new l
+                                , a = 2 < arguments.length && void 0 !== r ? r : new c
+                                , u = 3 < arguments.length && void 0 !== n ? n : 0;
+                            if (!(this.depth && u > this.depth || i.track(t)))
+                                return a.add(u, t),
+                                    this.getNodes(t, "output").map(function (t) {
+                                        return o.getNodesBoard(t, i, a, u + 1)
+                                    }),
+                                    this.getNodes(t, "input").map(function (t) {
+                                        return o.getNodesBoard(t, i, a, u - 1)
+                                    }),
+                                    a
+                        }
+                    }, {
+                        key: "getNodeSize",
+                        value: function (t) {
+                            var e = this.editor.view.nodes.get(t).el;
+                            return this.vertical ? {
+                                height: e.clientWidth,
+                                width: e.clientHeight
+                            } : {
+                                    width: e.clientWidth,
+                                    height: e.clientHeight
+                                }
+                        }
+                    }, {
+                        key: "translateNode",
+                        value: function (t, e) {
+                            var r, n = e.x, o = e.y, i = this.vertical ? [o, n] : [n, o];
+                            (r = this.editor.view.nodes.get(t)).translate.apply(r, i),
+                                this.editor.view.updateConnections({
+                                    node: t
+                                })
+                        }
+                    }, {
+                        key: "arrange",
+                        value: function (node) {
+                            if (!node) {
+                                var connectedNodes = this.editor.nodes.filter(function (i) { return i.getConnections().length > 0; });
+                                if (connectedNodes.length > 0) node = connectedNodes[0];
+                                else {
+
+                                    node = this.editor.nodes[0];
+                                }
+                            }
+
+                            const board = this.getNodesBoard(node).toArray();
+                            const margin = this.vertical ? { x: this.margin.y, y: this.margin.x } : this.margin;
+
+                            let x = 0;
+
+                            for (let column of board) {
+                                const sizes = column.map(node => this.getNodeSize(node));
+                                const columnWidth = Math.max(...sizes.map(size => size.width));
+                                const fullHeight = sizes.reduce((sum, node) => sum + node.height + margin.y, 0);
+
+                                let y = 0;
+
+                                for (let node of column) {
+                                    const position = { x, y: y - fullHeight / 2 };
+                                    const { height } = this.getNodeSize(node);
+
+                                    this.translateNode(node, position);
+
+                                    y += height + margin.y;
+                                }
+
+                                x += columnWidth + margin.x;
+                            }
+                        }
+                    }]),
+                        o
+                }();
+
+            var r = {
+                name: "auto-arrange",
+                install: function (editor, { margin = { x: 50, y: 50 }, depth = null, vertical = false }) {
+                    editor.bind('arrange');
+
+                    const ar = new /*AutoArrange*/h(editor, margin, depth, vertical);
+
+                    editor.on('arrange', ({ node }) => ar.arrange(node));
+
+                    editor.arrange = node => {
+                        console.log(`Deprecated: use editor.trigger('arrange', { node }) instead`);
+                        ar.arrange(node);
+                    }
+                }
+            };
+            t.default = r,
+                Object.defineProperty(t, "__esModule", {
+                    value: !0
+                })
+        });
+        //# sourceMappingURL=auto-arrange-plugin.min.js.map
+
+        //# sourceMappingURL=auto-arrange-plugin.min.js.map
+
+
+    </script>
+
+
+
+    <!-- end auto arrange -->
+
+    <script id="rendered-js">
+
+        var VueStringControl = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div class="NumberControl">{{ikey}}<br/><input class="StringInput" type="text" :readonly="readonly" :value="value" @input="change($event)" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop=""/></div>',
+            data() {
+                return {
+                    value: ""
+                };
+
+            },
+            methods: {
+                change(e) {
+                    this.value = e.target.value;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value);
+                    this.emitter.trigger('process');
+                }
+            },
+
+            mounted() {
+                this.value = this.getData(this.ikey);
+            }
+        };
+
+        var VueInfoControl = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div class="InfoControl">{{ikey}}:<input class="StringInput" type="text" :readonly="readonly" :value="value" @input="change($event)" @dblclick.stop="" @pointerdown.stop="" @pointermove.stop=""/></div>',
+            data() {
+                return {
+                    value: ""
+                };
+
+            },
+            methods: {
+                change(e) {
+                    this.value = e.target.value;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value);
+                    this.emitter.trigger('process');
+                }
+            },
+
+            mounted() {
+                this.value = this.getData(this.ikey);
+            }
+        };
+
+        function setControl(node, input, value) {
+            node.inputs.get(input).control.setValue(value); node.inputs.get(input).control.vueContext.update();
+        }
+
+
+        var VueScreenSetupControl = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div class="ScreenSetupControl">{{ikey}}:<br/><button v-on:click="b1Callback(1920,1080)">1920x1080</button><br/><button v-on:click="b1Callback(2560,1440)">2560x1440</button><br/><button v-on:click="b1Callback(3840,2160)">3840x2160</button></div>',
+            data() {
+                return {
+                    value: ""
+                };
+
+            },
+            methods: {
+                change(e) {
+                    this.value = e.target.value;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value);
+                    this.emitter.trigger('process');
+                },
+                b1Callback(x, y) {
+                    debugger;
+                    var ct = parseInt(prompt("How many values to generate?", "300"));
+                    var pos = prompt("l/r/t/b? (left/right/top/bottom of screen)", "l");
+                    var size = parseInt(prompt("Width in pixels of each sample", "30"));
+                    var size2 = parseInt(prompt("Height in pixels of each sample", "30"));
+                    for (var i = 0; i < editor.nodes.length; i++) {
+                        var p = editor.nodes[i].controls.get("Presets");
+                        if (p) {
+                            if (editor.nodes[i].controls.get("Presets").vueContext._uid == this._uid) {
+                                var node = editor.nodes[i];
+
+                                var w = size;
+                                var h = size2;
+
+                                if (pos === "l" || pos === "t" || pos === "b")
+                                    setControl(node, "num1", Math.floor(w/2)); // start x
+                                else setControl(node, "num1", Math.floor((x-1 - w/2))); // start x
+
+                                if (pos === "l" || pos === "t" || pos === "r")
+                                    setControl(node, "num2", Math.floor(h / 2)); // start y
+                                else setControl(node, "num2", Math.floor((y-1 - h / 2))); // start y
+
+                                setControl(node, "num3", w); // w
+                                setControl(node, "num4", h); // h
+
+                                if (pos === "l" || pos === "r") setControl(node, "num5", 0); // 
+                                else setControl(node, "num5", ((x-1 - w))/ ct); // 
+
+                                if (pos === "t" || pos === "b") setControl(node, "num6", 0); // 
+                                else setControl(node, "num6",((y-1 - h) / ct)); // 
+
+                                setControl(node, "num7", ct); // 
+                                
+                                break;
+                            }
+                        }
+                    }
+                    
+                }
+            },
+
+            mounted() {
+                this.value = this.getData(this.ikey);
+            }
+        };
+
+
+        var VueDefaultLayoutControl = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div>ROFL<button v-on:click="lol(this._uid)"/></div>',
+            data() {
+                return {
+                    value: ""
+                };
+
+            },
+            methods: {
+                change(e) {
+                    this.value = e.target.value;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value);
+                    this.emitter.trigger('process');
+                },
+                lol(v) {
+                    this.value = v;
+                    var n = editor.nodes;
+
+                    var node = undefined;
+
+                    for (var nodeCtr = 0; nodeCtr < n.length; nodeCtr++) {
+                        var node = n[nodeCtr];
+                        if (node.controls.get("defaultLayout") && node.controls.get("defaultLayout").vueContext._uid == this._uid)
+                            break;
+                        else node = undefined;
+                    }
+                    node.inputs.get("num1").control.setValue(15);node.inputs.get("num1").control.vueContext.update();
+                    node.inputs.get("num2").control.setValue(12);node.inputs.get("num2").control.vueContext.update();
+                    node.inputs.get("num3").control.setValue(20);node.inputs.get("num3").control.vueContext.update();
+                    node.inputs.get("num4").control.setValue(20);node.inputs.get("num4").control.vueContext.update();
+                    node.inputs.get("num5").control.setValue(7);node.inputs.get("num5").control.vueContext.update();
+                    node.inputs.get("num6").control.setValue(4);node.inputs.get("num6").control.vueContext.update();
+                    node.inputs.get("num7").control.setValue(80);node.inputs.get("num7").control.vueContext.update();
+                    node.inputs.get("num8").control.setValue("G:\plasma.mp4"); node.inputs.get("num8").control.vueContext.update();
+                    node.inputs.get("num9").control.setValue(0); node.inputs.get("num9").control.vueContext.update();
+                    node.inputs.get("num10").control.setValue(0); node.inputs.get("num10").control.vueContext.update();
+
+                    //$($(this.$el).closest('.node').find('.input').find('.NumberControl').find('input')[0]).val(10  )[0].dispatchEvent(new Event('focus', { 'bubbles': true }));
+                    //$($(this.$el).closest('.node').find('.input').find('.NumberControl').find('input')[1]).val(10)[0].dispatchEvent(new Event('focus', { 'bubbles': true }));
+                    //$($(this.$el).closest('.node').find('.input').find('.NumberControl').find('input')[2]).val(20  )[0].dispatchEvent(new Event('focus', { 'bubbles': true }));
+                    //$($(this.$el).closest('.node').find('.input').find('.NumberControl').find('input')[3]).val(20  )[0].dispatchEvent(new Event('focus', { 'bubbles': true }));
+                    //$($(this.$el).closest('.node').find('.input').find('.NumberControl').find('input')[4]).val(30  )[0].dispatchEvent(new Event('focus', { 'bubbles': true }));
+                    //$($(this.$el).closest('.node').find('.input').find('.NumberControl').find('input')[5]).val(0   )[0].dispatchEvent(new Event('focus', { 'bubbles': true }));
+                    //$($(this.$el).closest('.node').find('.input').find('.NumberControl').find('input')[6]).val(80)[0].dispatchEvent(new Event('focus', { 'bubbles': true }));
+                    //$($(this.$el).closest('.node').find('.input').find('.NumberControl').find('input')[7]).val(0)[0].dispatchEvent(new Event('focus', { 'bubbles': true }));
+                    //debugger;
+                    this.update();
+                }
+            },
+
+            mounted() {
+                this.value = this.getData(this.ikey);
+            }
+        };
+
+
+        var VueString2Control = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div class="NumberControl">{{value}}{{helpText}}</div>',
+            data() {
+                return {
+                    value: "",
+                    helpText: ""
+
+                };
+
+            },
+            methods: {
+                change(e) {
+                    this.value = e.target.value;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value);
+                    this.emitter.trigger('process');
+                }
+            },
+
+            mounted() {
+                this.value = this.getData(this.ikey);
+            }
+        };
+
+        var VueTooltipControl = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div class="NumberControl"><span class="tooltiptext">{{value}}{{helpText}}</span></div>',
+            data() {
+                return {
+                    value: "",
+                    helpText: ""
+
+                };
+
+            },
+            methods: {
+                change(e) {
+                    this.value = e.target.value;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value);
+                    this.emitter.trigger('process');
+                }
+            },
+
+            mounted() {
+                this.value = this.getData(this.ikey);
+            }
+        };
+
+        var VueNumberControl = {
+            props: ['readonly', 'defaultVal', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div class="NumberControl">{{ikey}}<br/><input type="text" :readonly="readonly" :value="value" v-on:blur="change($event)" @dblclick.stop=""/></div>',
+            data() {
+                return {
+                    value: 0,
+                    helpText: ""
+                }
+            },
+            methods: {
+                change(e) {
+                    try {
+                        this.value = +Math.floor(eval(e.target.value));
+                        this.update();
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value)
+                    this.emitter.trigger('process');
+                }
+            },
+            mounted() {
+                this.value = this.getData(this.ikey);
+                let val = this.getData(this.ikey);
+                this.value = val === undefined ? this.defaultVal : val;
+                this.update();
+            }
+        }
+
+        var VueFloatControl = {
+            props: ['readonly', 'defaultVal', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div class="FloatControl">{{ikey}}<br/><input type="text" :readonly="readonly" :value="value" v-on:blur="change($event)" @dblclick.stop=""/></div>',
+            data() {
+                return {
+                    value: 0,
+                    helpText: ""
+                }
+            },
+            methods: {
+                change(e) {
+                    try {
+                        this.value = (eval(e.target.value));
+                        this.update();
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value)
+                    this.emitter.trigger('process');
+                }
+            },
+            mounted() {
+                this.value = this.getData(this.ikey);
+                let val = this.getData(this.ikey);
+                this.value = val === undefined ? this.defaultVal : val;
+                this.update();
+            }
+        }
+
+
+        var VueListControl = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            //template: '<div class="ListControl">{{ikey}}<br/><input type="number" max="65535" min="0" :readonly="readonly" :value="value" @input="change($event)" @dblclick.stop=""/></div>',
+            data() {
+                return {
+                    value: 0,
+                    helpText: ""
+                }
+            },
+            methods: {
+                change(e) {
+                    this.value = +e.target.value;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value)
+                    this.emitter.trigger('process');
+                }
+            },
+            mounted() {
+                this.value = this.getData(this.ikey);
+            }
+        }
+
+        var VueHsbControl = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            //template: '<div class="ListControl">{{ikey}}<br/><input type="number" max="65535" min="0" :readonly="readonly" :value="value" @input="change($event)" @dblclick.stop=""/></div>',
+            data() {
+                return {
+                    value: 0,
+                    helpText: ""
+                }
+            },
+            methods: {
+                change(e) {
+                    this.value = +e.target.value;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.value)
+                    this.emitter.trigger('process');
+                }
+            },
+            mounted() {
+                this.value = this.getData(this.ikey);
+            }
+        }
+
+        var VueBooleanControl = {
+            props: ['readonly', 'emitter', 'ikey', 'getData', 'putData'],
+            template: '<div class="NumberControl"><input type="checkbox" :readonly="readonly" :value="checked" @input="change($event)" @dblclick.stop=""/>{{ikey}}</div>',
+            data() {
+                return {
+                    checked: false,
+                    helpText: ""
+                }
+            },
+            methods: {
+                change(e) {
+                    this.checked = e.target.checked;
+                    this.update();
+                },
+                update() {
+                    if (this.ikey)
+                        this.putData(this.ikey, this.checked)
+                    this.emitter.trigger('process');
+                }
+            },
+            mounted() {
+                this.checked = this.getData(this.ikey);
+            }
+        }
+
+
+        MAGICSOCKETTOKEN
+
+        class StringComponent extends Rete.Component {
+
+            constructor() {
+                super("String");
+                this.data.component = CustomNode;
+                this.data.submenu = "";
+
+            }
+
+            builder(node) {
+                var out1 = new Rete.Output('string', "String", stringSocket);
+
+                return node.addControl(new StringControl(this.editor, 'string')).addOutput(out1);
+            }
+
+            worker(node, inputs, outputs) { }
+        }
+
+        var CustomNode = Vue.component('num', {
+            template: `<div class="node" :class="[selected(), node.name] | kebab">
+  <div class="title"><span class="label">{{node.name}}</span><span class="control" v-for="control in controls()" v-control="control"></span></div>
+
+  <!-- Outputs-->
+  <div class="output" v-for="output in outputs()" :key="output.key">
+    <div class="output-title">{{output.name}}</div>
+    <Socket v-socket:output="output" type="output" :socket="output.socket"></Socket>
+  </div>
+  <!-- Controls-->
+
+  <!-- Inputs-->
+  <div class="input" v-for="input in inputs()" :key="input.key">
+    <Socket v-socket:input="input" type="input" :socket="input.socket"></Socket>
+    <div class="input-title" v-show="!input.showControl()">{{input.name}}</div>
+    <div class="input-control" v-show="input.showControl()" v-control="input.control"></div>
+  </div>
+</div>`,
+
+            mixins: [VueRenderPlugin.mixin],
+            components: {
+                Socket: VueRenderPlugin.Socket
+            }
+        });
+
+        class NumberComponent extends Rete.Component {
+
+            constructor() {
+                super("Number");
+                this.data.component = CustomNode;
+                this.data.submenu = "";
+            }
+
+            builder(node) {
+                var out1 = new Rete.Output('number', "Number", numberSocket);
+
+                return node.addControl(new NumberControl(this.editor, 'number')).addOutput(out1);
+            }
+
+            worker(node, inputs, outputs) {
+                outputs.num = node.data.num;
+            }
+        }
+
+        class FloatComponent extends Rete.Component {
+
+            constructor() {
+                super("Float");
+                this.data.component = CustomNode;
+                this.data.submenu = "";
+            }
+
+            builder(node) {
+                var out1 = new Rete.Output('float', "Float", numberSocket);
+
+                return node.addControl(new FloatControl(this.editor, 'float')).addOutput(out1);
+            }
+
+            worker(node, inputs, outputs) {
+                outputs.num = node.data.num;
+            }
+        }
+
+        class ListComponent extends Rete.Component {
+
+            constructor() {
+                super("List");
+                this.data.component = CustomNode;
+                this.data.submenu = "";
+            }
+
+            builder(node) {
+                var out1 = new Rete.Output('list', "List", listSocket);
+
+                return node.addControl(new ListControl(this.editor, 'list')).addOutput(out1);
+            }
+
+            worker(node, inputs, outputs) {
+                outputs.num = node.data.num;
+            }
+        }
+
+        class BooleanComponent extends Rete.Component {
+
+            constructor() {
+                super("List");
+                this.data.component = CustomNode;
+                this.data.submenu = "";
+            }
+
+            builder(node) {
+                var out1 = new Rete.Output('boolean', "Boolean", listSocket);
+
+                return node.addControl(new ListControl(this.editor, 'boolean')).addOutput(out1);
+            }
+
+            worker(node, inputs, outputs) {
+                outputs.num = node.data.num;
+            }
+        }
+
+        class LightComponent extends Rete.Component {
+            constructor() {
+                super("Light");
+                this.data.component = CustomNode;
+                this.data.submenu = "";
+            }
+
+            builder(node) {
+                var inp1 = new Rete.Input('Hue', "Hue", listSocket);
+                var inp2 = new Rete.Input('Saturation', "Saturation", listSocket);
+                var inp3 = new Rete.Input('Brightness', "Brightness", listSocket);
+                var inp4 = new Rete.Input('IP Address', "IP Address", stringSocket);
+                var inp5 = new Rete.Input('Frequency (ms)', "Frequency (ms)", numberSocket);
+                var inp6 = new Rete.Input('Fade', "Fade", booleanSocket);
+                var inp7 = new Rete.Input('Reverse', "Reverse", booleanSocket);
+                var inp8 = new Rete.Input('HSB', 'HSB', hsbSocket);
+                var out1 = new Rete.Output('Rendered Light', "Rendered Light", renderedLightSocket);
+
+                var c = new StringControl(this.editor, 'IP Address');
+
+                var d = new InfoControl(this.editor, 'Type');
+                var e = new InfoControl(this.editor, 'Name');
+
+                inp4.addControl(c);
+                inp5.addControl(new NumberControl(this.editor, 'Frequency (ms)'));
+                inp6.addControl(new BooleanControl(this.editor, 'Fade'));
+                inp7.addControl(new BooleanControl(this.editor, 'Reverse'));
+
+                return node.addControl(e).addControl(d).
+                    addInput(inp1).
+                    addInput(inp2).
+                    addInput(inp3).
+                    addInput(inp4)
+                    .addOutput(out1)
+                    .addInput(inp5)
+                    .addInput(inp6)
+                    .addInput(inp7)
+                    .addInput(inp8)
+                    ;
+            }
+
+            worker(node, inputs, outputs) {
+               // var node = this.editor.nodes.find(n => n.id == node.id); node.controls.get('helpText').setValue('Represents a bulb or LED strip.');
+
+            }
+        }
+
+        var add, renderer;
+
+        function upload() {
+            var rendererNodes = editor.nodes.filter(function (i) { return i.name == "Renderer"; });
+            if (rendererNodes.length != 1) return;
+
+            var nodes = [];
+            var connectionSummary = [];
+            var nodeSummary = [];
+
+            var nodeCtr = 0;
+
+            rendererNode = rendererNodes[0];
+            nodes.push(rendererNode);
+            nodeSummary.push({ id: rendererNode.id, name: rendererNode.name });
+
+            while (nodeCtr < nodes.length) {
+                var connections = nodes[nodeCtr].getConnections();
+
+                for (var connCtr = 0; connCtr < connections.length; connCtr++) {
+                    var connection = connections[connCtr];
+
+                    connectionSummary.push({ outid: connection.output.node.id, outsocket: connection.output.key, inid: connection.input.node.id, insocket: connection.input.key });
+
+                    var parentNode = connection.output.node;
+
+                    if (nodes.indexOf(parentNode) == -1) {
+                        nodes.push(parentNode);
+                        debugger;
+                        nodeSummary.push({ lighttype: parentNode.name == "Light" ? parentNode.data.Type : "", id: parentNode.id, type: parentNode.name, name: parentNode.data.name, numberval: parentNode.data.number, stringval: parentNode.data.String, data: parentNode.data  });
+                    }
+                }
+
+                nodeCtr++;
+            }
+
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    //document.getElementById("demo").innerHTML =
+                    $('#ReturnMessage').text(new Date +": " + this.responseText).show();
+                    console.log(this.responseText);
+                }
+            };
+            var theUrl = "/json";
+            xmlhttp.open("POST", theUrl);
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            var j = JSON.stringify({ nodes: nodeSummary, connections: connectionSummary });
+            xmlhttp.send(j);
+
+        }
+
+        MAGICCOMPONENTTOKEN
+
+        var container = document.querySelector('#rete');
+
+        var editor = new Rete.NodeEditor('demo@0.1.0', container);
+
+        var latestDiagram;
+
+        (async () => {
+            editor.use(ConnectionPlugin.default);
+            editor.use(VueRenderPlugin, {
+                component: CustomNode
+            });
+            editor.use(ContextMenuPlugin.default, {
+                allocate(component) {
+                    //if (["Number", "Light", "Renderer", "List", "String"].indexOf(component.name) !== -1) return ["Literals"];
+                    if (component.data.submenu.length > 0) return [component.data.submenu];
+                    return [];
+                    //debugger;
+                    //if (component.name.indexOf("HSB") == 0) return ["HSB"];
+                }
+            });
+            editor.use(AreaPlugin);
+            editor.use(CommentPlugin.default);
+            editor.use(HistoryPlugin);
+            editor.use(ConnectionMasteryPlugin.default);
+            editor.use(AutoArrangePlugin.default, { margin: { x: 50, y: 50 }, depth: 100 });
+            editor.use(MinimapPlugin.default);
+
+            var engine = new Rete.Engine('demo@0.1.0');
+
+            components.map(c => {
+                editor.register(c);
+                engine.register(c);
+            });
+
+            editor.on('process nodecreated noderemoved connectioncreated connectionremoved', async () => {
+                console.log('process');
+                await engine.abort();
+                await engine.process(editor.toJSON());
+            });
+
+            MAGICTOKEN
+
+            if (latestDiagram) {
+
+                var nodes = latestDiagram.nodes.sort(function (a, b) { return a.id < b.id; });
+
+                var idConv = [];
+
+                for (var nodeCtr = 0; nodeCtr < nodes.length; nodeCtr++) {
+                    var node = nodes[nodeCtr];
+
+                    var component;
+
+                    if (node.name == "Renderer") {
+                        var compFilter = components.filter(function (i) { return i.name == node.name; });
+                        component = await compFilter[0].createNode({});
+                    }
+                    else {
+                        var compFilter = components.filter(function (i) { return i.name == node.type; });
+                        if (compFilter.length > 1) throw "CompFilter too long...";
+
+                        component = await compFilter[0].createNode({ name: node.name});
+                    }
+
+                    //component.id = node.id;
+                    idConv.push({ old: node.id, new: component.id });
+                    component.data = node.data;
+
+                    editor.addNode(component);
+
+                }
+
+                for (var connCtr = 0; connCtr < latestDiagram.connections.length; connCtr++) {
+                    var conn = latestDiagram.connections[connCtr];
+
+                    try {
+
+
+                        var transOutConnId = idConv.filter(function (e) { if (conn.outid == e.old) return e; })[0].new;
+                        var transInConnId = idConv.filter(function (e) { if (conn.inid == e.old) return e; })[0].new;
+                        var node1 = editor.nodes.filter(function (i) { return i.id === transOutConnId; })[0];
+                        var node2 = editor.nodes.filter(function (i) { return i.id === transInConnId; })[0];
+
+                        editor.connect(node1.outputs.get(conn.outsocket), node2.inputs.get(conn.insocket));
+                    }
+                    catch (e) {
+
+                    }
+                }
+            }
+
+            clickArrange();
+            editor.view.resize();
+            AreaPlugin.zoomAt(editor);
+            editor.trigger('process');
+        })();
+
+        function clickArrange() {
+            console.log('Arranging...');
+            editor.trigger('arrange', { node: add });
+
+            var nodes = Array.from(this.editor.view.nodes);
+
+            var maxY = Number.MIN_VALUE, minX = Number.MAX_VALUE, maxX = Number.MIN_VALUE;
+
+            for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i][0].getConnections().length > 0) {
+                    minX = Math.min(minX, nodes[i][0].position[0]);
+                    maxY = Math.max(maxY, nodes[i][0].position[1] + nodes[i][0].vueContext.$el.offsetHeight);
+                    maxX = Math.max(maxX, nodes[i][0].position[0] + nodes[i][0].vueContext.$el.offsetWidth);
+                }
+            }
+
+            if (minX === Number.MAX_VALUE) minX = 0;
+            if (maxY === Number.MIN_VALUE) maxY = 0;
+            if (maxX === Number.MIN_VALUE) maxX = 1;
+
+            var tWidth = 0;
+
+            for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i][0].getConnections().length === 0) {
+                    tWidth += nodes[i][0].vueContext.$el.offsetWidth + 10;
+                }
+            }
+
+            minX -= (tWidth+minX-maxX) / 2;
+
+            for (var i = 0; i < nodes.length; i++) {
+                if (nodes[i][0].getConnections().length === 0) {
+                    nodes[i][1].translate(minX, maxY + 10);
+                    minX += nodes[i][0].vueContext.$el.offsetWidth + 10;
+                }
+            }
+        }
+
+        function clickUpload() {
+            console.log('Uploading...');
+            upload();
+        }
+    </script><div tabindex="1"><!-- al-if: contextMenu.visible --></div>
+</body>
+</html>

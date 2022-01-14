@@ -1,0 +1,28 @@
+﻿<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>MaxLifx2</title>
+
+</head>
+
+<body translate="no">
+
+    <script type="text/javascript">
+        function clickArrange() {
+            console.log('Arranging...');
+        }
+        function clickBut(e) {
+            console.log('click...');
+            var url = window.location.href;
+            url = url.substring(0, url.indexOf("?"));
+            window.location.href = url + "?filename=" + e;
+        }
+    </script>
+
+    MAGICJSONTOKEN
+
+    <button onclick="clickBut()">Arrange</button>
+</body>
+</html>

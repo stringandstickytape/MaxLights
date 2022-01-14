@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ceen.Httpd" Version="0.9.9" />
+    <PackageReference Include="ksemenenko.ColorThief" Version="1.1.1.4" />
+    <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
+    <PackageReference Include="NAudio.Core" Version="2.0.0" />
+    <PackageReference Include="NAudio.Wasapi" Version="2.0.0" />
+    <PackageReference Include="NAudio.WaveFormRenderer" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="OpenHardwareMonitor.Core" Version="0.8.0.5" />
+    <PackageReference Include="SimplexNoise" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DesktopDuplication\DesktopDuplication.csproj" />
+    <ProjectReference Include="..\MaxLifxCoreBulbController\MaxLifxCoreBulbController.csproj" />
+    <ProjectReference Include="..\RGB.NET.Devices.Asus\RGB.NET.Devices.Asus.csproj" />
+    <ProjectReference Include="..\RGB.NET.Devices.Corsair\RGB.NET.Devices.Corsair.csproj" />
+    <ProjectReference Include="..\RGB.NET.Devices.Logitech\RGB.NET.Devices.Logitech.csproj" />
+    <ProjectReference Include="..\RGB.NET.Devices.Msi\RGB.NET.Devices.Msi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="graph.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="load.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="spectrum.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
