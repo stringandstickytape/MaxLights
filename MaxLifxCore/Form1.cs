@@ -38,7 +38,7 @@ namespace MaxLifxCore
 
         public Bitmap bitmap { get; set; }
 
-        public readonly decimal Version = 0.2m;
+        public readonly decimal Version = 0.1m;
 
         public Form1()
         {
@@ -141,14 +141,14 @@ namespace MaxLifxCore
             {
                 var dialogResult =
                     MessageBox.Show(
-                        "Newer version found! Quit MaxLifx and browse to GitHub to download it?\r\n\r\nv" +
+                        "Update found. Quit MaxLights and browse to GitHub?\r\n\r\nv" +
                         maxVersion +
                         ":\r\n" + releaseDetails.body, "Update?",
                         MessageBoxButtons.YesNo);
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Process.Start(@"https://github.com/gitCommitWiL/MaxLifx-Z/releases");
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo($"https://github.com/stringandstickytape/MaxLights/releases") { UseShellExecute = true });
                     Application.Exit();
                 }
             }
@@ -447,13 +447,7 @@ namespace MaxLifxCore
             _appController.SaveSettings();
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            for (int x = 0; x < pictureBox1.Width; x++)
-                SetPixel((x), null);
 
-            PbRefresh(null,null);
-        }
 
         private void button6_Click(object sender, EventArgs e)
         {

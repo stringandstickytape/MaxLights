@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -42,19 +41,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 34);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 52);
+            this.button2.Location = new System.Drawing.Point(12, 10);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(370, 82);
             this.button2.TabIndex = 1;
@@ -64,7 +53,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(388, 52);
+            this.button3.Location = new System.Drawing.Point(388, 10);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(370, 127);
             this.button3.TabIndex = 2;
@@ -75,7 +64,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 189);
+            this.label1.Location = new System.Drawing.Point(19, 147);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 25);
             this.label1.TabIndex = 3;
@@ -83,7 +72,7 @@
             // 
             // tbPort
             // 
-            this.tbPort.Location = new System.Drawing.Point(136, 191);
+            this.tbPort.Location = new System.Drawing.Point(136, 149);
             this.tbPort.Name = "tbPort";
             this.tbPort.Size = new System.Drawing.Size(150, 31);
             this.tbPort.TabIndex = 4;
@@ -91,7 +80,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(300, 189);
+            this.button4.Location = new System.Drawing.Point(300, 147);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(375, 38);
             this.button4.TabIndex = 5;
@@ -102,7 +91,7 @@
             // cbPcHardware
             // 
             this.cbPcHardware.AutoSize = true;
-            this.cbPcHardware.Location = new System.Drawing.Point(12, 232);
+            this.cbPcHardware.Location = new System.Drawing.Point(12, 190);
             this.cbPcHardware.Name = "cbPcHardware";
             this.cbPcHardware.Size = new System.Drawing.Size(501, 29);
             this.cbPcHardware.TabIndex = 6;
@@ -116,15 +105,15 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lumPanel.AutoScroll = true;
-            this.lumPanel.Location = new System.Drawing.Point(12, 305);
+            this.lumPanel.Location = new System.Drawing.Point(12, 263);
             this.lumPanel.Name = "lumPanel";
-            this.lumPanel.Size = new System.Drawing.Size(1161, 933);
+            this.lumPanel.Size = new System.Drawing.Size(1161, 975);
             this.lumPanel.TabIndex = 8;
             // 
             // button5
             // 
             this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Location = new System.Drawing.Point(1061, 228);
+            this.button5.Location = new System.Drawing.Point(1061, 186);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(112, 34);
             this.button5.TabIndex = 9;
@@ -138,16 +127,16 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.Color.Black;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 267);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 225);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1161, 929);
+            this.pictureBox1.Size = new System.Drawing.Size(1161, 1013);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(12, 138);
+            this.button6.Location = new System.Drawing.Point(12, 96);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(370, 41);
             this.button6.TabIndex = 11;
@@ -170,9 +159,8 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "MaxLights";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -181,8 +169,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label1;
