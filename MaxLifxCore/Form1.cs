@@ -38,7 +38,7 @@ namespace MaxLifxCore
 
         public Bitmap bitmap { get; set; }
 
-        public readonly decimal Version = 0.1m;
+        public readonly decimal Version = 0.3m;
 
         public Form1()
         {

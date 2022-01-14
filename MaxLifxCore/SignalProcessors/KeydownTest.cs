@@ -18,18 +18,17 @@ namespace MaxLifxCore.SignalProcessors
             {
                 Inputs = new List<DiagramInput>()
                     {
-                        new DiagramInput { JsToken = "inp1", InputName = "num1", Label = "VK Keycode", Socket = NumberSocket},
                     },
                 Outputs = new List<DiagramOutput>()
                     {
                         new DiagramOutput { JsToken = "out1", OutputName = "num", Label = "Number (0-256)", Socket = NumberSocket}
                     },
                 ComponentJsName = "KeydownTestComponent",
-                ComponentName = "Keydown Test",
-                HelpText = "Returns the lowest VK_ code of all held-down keys.",
+                ComponentName = "Keydown",
+                HelpText = "Returns the lowest VK_ code of all held-down keys. See https://docs.microsoft.com/en-gb/windows/win32/inputdev/virtual-key-codes?redirectedfrom=MSDN for keycodes.",
             };
         }
-        private List<short> /*prevKeyStates, */currKeyStates;
+        private List<short> prevKeyStates, currKeyStates;
 
 
         [DllImport("User32.dll")]
@@ -38,22 +37,26 @@ namespace MaxLifxCore.SignalProcessors
 
         public ushort GetLatestValue(AppController controller, Light light, string outputSocketName, StringBuilder debug = null)
         {
-            short keyState = GetAsyncKeyState(gen[0].GetLatestValue(controller, light, OutputSocketName2[0], debug));
-
             if(currKeyStates == null)
-                currKeyStates = Enumerable.Range(0, 255).Select(x => GetAsyncKeyState(x)).ToList();
+                currKeyStates = Enumerable.Range(0, 256).Select(x => GetAsyncKeyState(x)).ToList();
 
-            //if (prevKeyStates == null)
-            //    prevKeyStates = currKeyStates;
+            if (prevKeyStates == null)
+                prevKeyStates = currKeyStates;
 
-            var diff = Enumerable.Range(0, 255).FirstOrDefault(x => currKeyStates[x] != 0);
+            var ctr = 0;
 
-            return (ushort)diff;
+            while (ctr < 255 && currKeyStates[ctr] == prevKeyStates[ctr])
+                ctr++;
+
+            if (ctr == 255 && currKeyStates[ctr] == prevKeyStates[ctr]) 
+                return 0;
+
+            return ((ushort)ctr);
         }
 
         public new void EndLoop()
         {
-            //prevKeyStates = currKeyStates;
+            prevKeyStates = currKeyStates;
             currKeyStates = null;
             
             base.EndLoop();

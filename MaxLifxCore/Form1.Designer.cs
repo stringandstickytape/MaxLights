@@ -95,7 +95,7 @@
             this.cbPcHardware.Name = "cbPcHardware";
             this.cbPcHardware.Size = new System.Drawing.Size(501, 29);
             this.cbPcHardware.TabIndex = 6;
-            this.cbPcHardware.Text = "Enable/Disable PC Hardware Support (requires app restart)";
+            this.cbPcHardware.Text = "Enable PC Hardware Support (requires app restart)";
             this.cbPcHardware.UseVisualStyleBackColor = true;
             this.cbPcHardware.CheckedChanged += new System.EventHandler(this.cbPcHardware_CheckedChanged);
             // 

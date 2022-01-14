@@ -45,7 +45,7 @@ namespace MaxLifxCore.SignalProcessors
             {
                 case "num": return inputList.Take(split1).ToList();
                 case "num1":
-                        if (split2 != null)
+                        if (split2 != null && split2 != 0)
                             return inputList.Skip(split1).Take(split2.Value - split1).ToList();
                         else return inputList.Skip(split1).ToList();
                 case "num2": return inputList.Skip(split2.Value).ToList();
