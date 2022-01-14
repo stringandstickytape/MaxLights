@@ -38,11 +38,18 @@ namespace MaxLifxCore
 
         public Bitmap bitmap { get; set; }
 
-        public readonly decimal Version = 0.1m;
+        public readonly decimal Version = 0.2m;
 
         public Form1()
         {
-            CheckForNewVersion();
+            try
+            {
+                CheckForNewVersion();
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             InitializeComponent();
             bitmap = new Bitmap(pictureBox1.Width, 1);
@@ -458,6 +465,12 @@ namespace MaxLifxCore
             {
                 _appController.LoadFromJson(ofd.FileName, true);
             }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Life is short.
+            Environment.Exit(0);
         }
 
         //private void button5_Click(object sender, EventArgs e)

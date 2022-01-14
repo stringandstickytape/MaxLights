@@ -113,7 +113,7 @@ public abstract class UpdateQueue<TIdentifier, TData> : IUpdateQueue<TIdentifier
     {
         _updateTrigger.Starting -= OnStartup;
         _updateTrigger.Update -= OnUpdate;
-
+        _updateTrigger.Dispose();
         Reset();
 
         GC.SuppressFinalize(this);

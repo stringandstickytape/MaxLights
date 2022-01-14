@@ -45,9 +45,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RGB.NET.Devices.PicoPi", "R
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RGB.NET", "RGB.NET", "{F0C96BD6-8BF3-4C1E-A456-C9A82EEEDC6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxLifxCore", "MaxLifxCore\MaxLifxCore.csproj", "{D373E714-313E-400B-9960-A29062E444AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxLights", "MaxLifxCore\MaxLights.csproj", "{D373E714-313E-400B-9960-A29062E444AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxLifxCoreBulbController", "MaxLifxCoreBulbController\MaxLifxCoreBulbController.csproj", "{BE442975-98B6-47C4-8444-518D134E30F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxLifxCoreBulbController", "MaxLifxCoreBulbController\MaxLifxCoreBulbController.csproj", "{BE442975-98B6-47C4-8444-518D134E30F6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesktopDuplication", "DesktopDuplication\DesktopDuplication.csproj", "{EDB17386-5F3B-48B6-8B4F-5A40527BB875}"
 EndProject
