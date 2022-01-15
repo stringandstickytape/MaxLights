@@ -101,7 +101,7 @@ namespace MaxLifxCore.SignalProcessors
                     System.Drawing.Imaging.ImageLockMode.ReadWrite,
                     frame.PixelFormat);
 
-                var colour = ScreenCaptureEngine.GetColourForRectFromBitmapData(rect, bmd, frame.PixelFormat);
+                var colour = ScreenCaptureEngine.GetColourForRectFromBitmapData(rect, bmd, frame.PixelFormat, 1, 1);
 
                 frame.UnlockBits(bmd);
 

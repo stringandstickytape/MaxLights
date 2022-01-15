@@ -1,4 +1,7 @@
-﻿using MaxLifxCore;
+﻿using FFMediaToolkit.Decoding;
+using FFMediaToolkit.Graphics;
+using LibVLCSharp.Shared;
+using MaxLifxCore;
 using MaxLifxCore.Controls;
 using MaxLifxCoreBulbController.Controllers;
 using MaxLifxCoreBulbController.Payload;
@@ -12,6 +15,8 @@ using RGB.NET.Devices.DMX;
 using RGB.NET.Devices.DMX.E131;
 using RGB.NET.Devices.Logitech;
 using RGB.NET.Devices.Msi;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -42,7 +47,6 @@ namespace MaxLifxCore
         public Bitmap bitmap { get; set; }
 
         public readonly decimal Version = 0.8m;
-
         public Form1()
         {
             try
@@ -510,4 +514,6 @@ namespace MaxLifxCore
         //    _appController.SaveSettings();
         //}
     }
+
+
 }

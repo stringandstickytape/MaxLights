@@ -18,7 +18,8 @@ namespace MaxLifxCore.SignalProcessors
                 Inputs = new List<DiagramInput>()
                     {
                         new DiagramInput { JsToken = "inp1", InputName = "num1", Label = "Number 1", Socket = NumberSocket},
-                        new DiagramInput { JsToken = "inp2", InputName = "num2", Label = "Number 2", Socket = NumberSocket}
+                        new DiagramInput { JsToken = "inp2", InputName = "num2", Label = "Number 2", Socket = NumberSocket},
+                        
                     },
                 Outputs = new List<DiagramOutput>()
                     {
@@ -39,7 +40,9 @@ namespace MaxLifxCore.SignalProcessors
         }
         public ushort GetLatestValue(AppController controller, Light light, string socketName, StringBuilder debug = null)
         {
-            var retVal =  (ushort)(gen[0].GetLatestValue(controller, light, OutputSocketName2[0], debug) * gen[1].GetLatestValue(controller, light, OutputSocketName2[1], debug));
+            var intRetVal = gen[0].GetLatestValue(controller, light, OutputSocketName2[0], debug) * gen[1].GetLatestValue(controller, light, OutputSocketName2[1], debug);
+
+            var retVal =  (ushort)(intRetVal);
             debug?.AppendLine($"Multiply => {retVal}");
             return retVal;
         }

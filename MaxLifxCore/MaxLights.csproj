@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ceen.Httpd" Version="0.9.9" />
+    <PackageReference Include="FFMediaToolkit" Version="4.1.2" />
     <PackageReference Include="ksemenenko.ColorThief" Version="1.1.1.4" />
     <PackageReference Include="MathNet.Numerics" Version="4.15.0" />
     <PackageReference Include="NAudio.Core" Version="2.0.0" />
@@ -18,6 +19,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="OpenHardwareMonitor.Core" Version="0.8.0.5" />
     <PackageReference Include="SimplexNoise" Version="2.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

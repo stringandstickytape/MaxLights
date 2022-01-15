@@ -25,7 +25,9 @@ namespace MaxLifxCore.SignalProcessors
                         new DiagramInput { JsToken = "inp5", InputName = "num5", Label = "X step", Socket = FloatSocket},
                         new DiagramInput { JsToken = "inp6", InputName = "num6", Label = "Y step", Socket = FloatSocket},
                         new DiagramInput { JsToken = "inp7", InputName = "num7", Label = "Items to Generate", Socket = NumberSocket},
-                        new DiagramInput { JsToken = "inp8", InputName = "num8", Label = "Monitor", Socket = NumberSocket}
+                        new DiagramInput { JsToken = "inp8", InputName = "num8", Label = "Monitor", Socket = NumberSocket},
+                        new DiagramInput { JsToken = "inp9", InputName = "num9", Label = "Sample every n pixels horizontally", Socket = NumberSocket},
+                        new DiagramInput { JsToken = "inp10", InputName = "num10", Label = "Sample every n pixels vertically", Socket = NumberSocket}
                     },
                 Outputs = new List<DiagramOutput>()
                     {
@@ -120,6 +122,9 @@ namespace MaxLifxCore.SignalProcessors
 
             var monitor = gen[7].GetLatestValue(controller, light, OutputSocketName2[7], debug);
 
+            var xAreaStep = gen[8].GetLatestValue(controller, light, OutputSocketName2[8], debug);
+            var yAreaStep = gen[9].GetLatestValue(controller, light, OutputSocketName2[9], debug);
+
             hues = new List<ushort>();
             sats = new List<ushort>();
             bris = new List<ushort>();
@@ -135,7 +140,7 @@ namespace MaxLifxCore.SignalProcessors
 
             for (var ctr = 0; ctr < itemsToGenerate; ctr++)
             {
-                c = _screenCaptureEngine.GetColour((ushort)x, (ushort)y, width, height);
+                c = _screenCaptureEngine.GetColour((ushort)x, (ushort)y, width, height, xAreaStep, yAreaStep);
                 if (c == null)
                 {
                     hues.Add((ushort)0);

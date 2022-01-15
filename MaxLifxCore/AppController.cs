@@ -18,6 +18,9 @@ using System.Windows.Forms;
 using MaxLifxCoreBulbController.Controllers;
 using MaxLifxCore.Controls;
 using MaxLifxCoreBulbController.Payload;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using FFMediaToolkit.Graphics;
 
 namespace MaxLifxCore
 {
@@ -309,6 +312,10 @@ namespace MaxLifxCore
 
     static class Extensions
     {
+        public static Image<Bgr24> ToBitmap(this ImageData imageData)
+        {
+            return SixLabors.ImageSharp.Image.LoadPixelData<Bgr24>(imageData.Data, imageData.ImageSize.Width, imageData.ImageSize.Height);
+        }
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>
 (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {

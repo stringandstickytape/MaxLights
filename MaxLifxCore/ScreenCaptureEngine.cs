@@ -28,7 +28,7 @@ namespace MaxLifxCore
         private Color? previousColour = null;
         private ushort prevx, prevy, prevw, prevh;
 
-        public unsafe Color? GetColour(ushort x, ushort y, ushort width, ushort height)
+        public unsafe Color? GetColour(ushort x, ushort y, ushort width, ushort height, int xStep, int yStep)
         {
             // If the frame hasn't become out of date, and the coords are the same as last time, return the same colour as last time
             if(!reset && frame != null && x == prevx && y == prevy && width == prevw && height == prevh)
@@ -37,13 +37,13 @@ namespace MaxLifxCore
             }
             prevx = x;  prevy = y; prevw = width; prevh = height;
             // user specifies centre of rectangle.  System wants top-left.
-            previousColour = getAverageColourForArea(new Rectangle(x-width/2, y-height/2, width, height));
+            previousColour = getAverageColourForArea(new Rectangle(x-width/2, y-height/2, width, height), xStep, yStep);
             return previousColour;
         }
 
         DesktopFrame frame;
         private bool reset = false;
-        private unsafe Color? getAverageColourForArea(Rectangle rect, bool getNewFrame = false)
+        private unsafe Color? getAverageColourForArea(Rectangle rect, int xStep, int yStep, bool getNewFrame = false)
         {
             if (getNewFrame || reset)
             {
@@ -63,7 +63,7 @@ namespace MaxLifxCore
                                   System.Drawing.Imaging.ImageLockMode.ReadWrite,
                                   frame.DesktopImage.PixelFormat);
 
-                all = GetColourForRectFromBitmapData(rect, bmd, frame.DesktopImage.PixelFormat);
+                all = GetColourForRectFromBitmapData(rect, bmd, frame.DesktopImage.PixelFormat, xStep, yStep);
 
                 frame.DesktopImage.UnlockBits(bmd);
             }
@@ -71,29 +71,30 @@ namespace MaxLifxCore
             return all;
         }
 
-        public static unsafe Color? GetColourForRectFromBitmapData(Rectangle rect, BitmapData bmd, PixelFormat pixelFormat)
+        public static unsafe Color? GetColourForRectFromBitmapData(Rectangle rect, BitmapData bmd, PixelFormat pixelFormat, int xStep, int yStep)
         {
             Color? all;
             int rTot = 0, bTot = 0, gTot = 0;
             
             int PixelSize = pixelFormat == PixelFormat.Format32bppRgb || pixelFormat == PixelFormat.Format32bppArgb ? 4 : 3;
 
+            int ct = 0;
+
             unsafe
             {
-                for (int y = 0; y < rect.Height; y++)
+                for (int y = 0; y < rect.Height; y+=yStep)
                 {
                     byte* row = (byte*)bmd.Scan0 + (y * bmd.Stride);
 
-                    for (int x = 0; x < rect.Width; x++)
+                    for (int x = 0; x < rect.Width; x+=xStep)
                     {
                         bTot += row[x * PixelSize];
                         gTot += row[x * PixelSize + 1];
                         rTot += row[x * PixelSize + 2];
+                        ct++;
                     }
                 }
             }
-
-            int ct = rect.Width * rect.Height;
 
             all = Color.FromArgb(rTot / ct, gTot / ct, bTot / ct);
             return all;

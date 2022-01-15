@@ -1,5 +1,7 @@
 ﻿
 
+using FFMediaToolkit.Decoding;
+using FFMediaToolkit.Graphics;
 using MaxLifxCore.DiagramConstituents;
 using MaxLifxCore.SignalGenerators;
 using MaxLifxCore.SignalReceivers;
@@ -12,7 +14,7 @@ using System.Linq;
 using System.Text;
 
 namespace MaxLifxCore.SignalProcessors
-{/*
+{
     class VideoCapture : SignalProcessorBase, ISignalGenerator
     {
         public static DiagramComponent GetDiagramComponent()
@@ -25,8 +27,8 @@ namespace MaxLifxCore.SignalProcessors
                         new DiagramInput { JsToken = "inp2", InputName = "num2", Label = "Y", Socket = NumberSocket},
                         new DiagramInput { JsToken = "inp3", InputName = "num3", Label = "Width", Socket = NumberSocket},
                         new DiagramInput { JsToken = "inp4", InputName = "num4", Label = "Height", Socket = NumberSocket},
-                        new DiagramInput { JsToken = "inp5", InputName = "num5", Label = "X step", Socket = NumberSocket},
-                        new DiagramInput { JsToken = "inp6", InputName = "num6", Label = "Y step", Socket = NumberSocket},
+                        new DiagramInput { JsToken = "inp5", InputName = "num5", Label = "X step", Socket = FloatSocket},
+                        new DiagramInput { JsToken = "inp6", InputName = "num6", Label = "Y step", Socket = FloatSocket},
                         new DiagramInput { JsToken = "inp7", InputName = "num7", Label = "Items to Generate", Socket = NumberSocket},
                         new DiagramInput { JsToken = "inp8", InputName = "num8", Label = "Video Filename", Socket = StringSocket},
                         new DiagramInput { JsToken = "inp9", InputName = "num9", Label = "Start Frame", Socket = NumberSocket},
@@ -73,10 +75,11 @@ namespace MaxLifxCore.SignalProcessors
         private Queue<ushort> _buffer;
         private ushort _bufferCapacity;
         private ScreenCaptureEngine _screenCaptureEngine;
-        private VideoFileReader videoFileReader;
-        private Bitmap frame = null;
+        private Bitmap bitmap = null;
         private int frameCtr = 0;
 
+        public MediaFile CurrentMediaFile { get; private set; }
+        public bool MediaFileStartSkipCompleted { get; set; }
 
         public ushort GetLatestValue(AppController controller, Light light, string socketName, StringBuilder debug = null)
         {
@@ -85,18 +88,16 @@ namespace MaxLifxCore.SignalProcessors
 
         public List<ushort> GetLatestListValues(AppController controller, Light light, string outputSocketName, StringBuilder debug = null)
         {
-
-
-            UpdateFrame(controller, light, debug);
+            var imageData = GetNextFrame(controller, light, debug);
 
             var itemsToGenerate = gen[6].GetLatestValue(controller, light, OutputSocketName2[6], debug);
 
-            if (frame == null)
+            if (imageData.Data.Length == 0)
             {
                 return Enumerable.Repeat((ushort)0, itemsToGenerate).ToList();
             }
 
-            GetHsbsFromFrame(controller, light, debug, out var hues, out var sats, out var bris, itemsToGenerate);
+            GetHsbsFromFrame(controller, light, debug, out var hues, out var sats, out var bris, itemsToGenerate, imageData);
 
             switch (outputSocketName)
             {
@@ -111,27 +112,27 @@ namespace MaxLifxCore.SignalProcessors
             }
         }
 
+
+
         public List<HsbUshort> GetLatestHsbListValues(AppController controller, Light light, string outputSocketName, StringBuilder debug = null)
         {
-
-
-            UpdateFrame(controller, light, debug);
+            var imageData = GetNextFrame(controller, light, debug);
 
             var itemsToGenerate = gen[6].GetLatestValue(controller, light, OutputSocketName2[6], debug);
 
-            if (frame == null)
+            if (bitmap == null)
             {
                 return Enumerable.Repeat(new HsbUshort(), itemsToGenerate).ToList();
             }
 
-            GetHsbsFromFrame(controller, light, debug, out var hues, out var sats, out var bris, itemsToGenerate);
+            GetHsbsFromFrame(controller, light, debug, out var hues, out var sats, out var bris, itemsToGenerate, imageData);
 
             var num = Math.Min(Math.Min(hues.Count, sats.Count), bris.Count);
 
-            return Enumerable.Range(0,num).Select(x => new HsbUshort { H = hues[x], S = sats[x], B = bris[x]} ).ToList();
+            return Enumerable.Range(0, num).Select(x => new HsbUshort { H = hues[x], S = sats[x], B = bris[x] }).ToList();
         }
 
-        private void GetHsbsFromFrame(AppController controller, Light light, StringBuilder debug, out List<ushort> hues, out List<ushort> sats, out List<ushort> bris, ushort itemsToGenerate)
+        private void GetHsbsFromFrame(AppController controller, Light light, StringBuilder debug, out List<ushort> hues, out List<ushort> sats, out List<ushort> bris, ushort itemsToGenerate, ImageData imageData)
         {
             hues = new List<ushort>();
             sats = new List<ushort>();
@@ -140,30 +141,23 @@ namespace MaxLifxCore.SignalProcessors
             var width = gen[2].GetLatestValue(controller, light, OutputSocketName2[2], debug);
             var height = gen[3].GetLatestValue(controller, light, OutputSocketName2[3], debug);
 
-            var x = gen[0].GetLatestValue(controller, light, OutputSocketName2[0], debug);
-            var y = gen[1].GetLatestValue(controller, light, OutputSocketName2[1], debug);
+            float x = gen[0].GetLatestValue(controller, light, OutputSocketName2[0], debug);
+            float y = gen[1].GetLatestValue(controller, light, OutputSocketName2[1], debug);
 
-            var xStep = gen[4].GetLatestValue(controller, light, OutputSocketName2[4], debug);
-            var yStep = gen[5].GetLatestValue(controller, light, OutputSocketName2[5], debug);
-
-
-
-
-
-
-
+            var xStep = gen[4].GetLatestFloatValue(controller, light, OutputSocketName2[4], debug);
+            var yStep = gen[5].GetLatestFloatValue(controller, light, OutputSocketName2[5], debug);
 
             for (var ctr = 0; ctr < itemsToGenerate; ctr++)
             {
-                var rect = new System.Drawing.Rectangle(x, y, width, height);
+                var rect = new System.Drawing.Rectangle((int)x, (int)y, width, height);
+                
+                //BitmapData bmd = bitmap.LockBits(rect,
+                //    System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                //    bitmap.PixelFormat);
 
-                BitmapData bmd = frame.LockBits(rect,
-                    System.Drawing.Imaging.ImageLockMode.ReadWrite,
-                    frame.PixelFormat);
+                var colour = GetColourForRectFromBitmapData(rect, imageData);
 
-                var colour = ScreenCaptureEngine.GetColourForRectFromBitmapData(rect, bmd, frame.PixelFormat);
-
-                frame.UnlockBits(bmd);
+                //bitmap.UnlockBits(bmd);
 
                 if (colour == null)
                 {
@@ -185,67 +179,92 @@ namespace MaxLifxCore.SignalProcessors
             }
         }
 
-        private void UpdateFrame(AppController controller, Light light, StringBuilder debug)
+
+
+        private ImageData GetNextFrame(AppController controller, Light light, StringBuilder debug)
         {
-            long endFrame = gen[9].GetLatestValue(controller, light, OutputSocketName2[9], debug);
+            ImageData imageData;
+            var lastFrameNo = gen[9].GetLatestValue(controller, light, OutputSocketName2[9], null);
 
-            if (videoFileReader != null && endFrame == 0)
-                endFrame = videoFileReader.FrameCount;
+            if (lastFrameNo > 0 && CurrentMediaFile.Video.Position.TotalSeconds * CurrentMediaFile.Video.Info.AvgFrameRate > lastFrameNo)
+                MediaFileStartSkipCompleted = false;
 
-            if (videoFileReader != null &&
-                frameCtr >= endFrame && endFrame > 0 // past end of video
-                )
+            if (!MediaFileStartSkipCompleted)
             {
-                videoFileReader.Close();
-                videoFileReader.Dispose();
-                videoFileReader = null;
+                if(CurrentMediaFile.Video.TryGetFrame(TimeSpan.FromSeconds((float)(gen[8].GetLatestValue(controller, light, OutputSocketName2[8], null))/ ((float)CurrentMediaFile.Video.Info.AvgFrameRate)), out imageData))
+                {
+                    MediaFileStartSkipCompleted = true;
+                    return imageData;
+                }
+                
             }
-
-            if (videoFileReader == null)
+            
+            if (CurrentMediaFile.Video.TryGetNextFrame(out imageData))
             {
-                videoFileReader = new VideoFileReader();
-
-                var filename = gen[7].GetLatestStringValue(controller, light, debug);
-
-
-                videoFileReader.Open(filename);
-                frameCtr = 0;
-                var startFrame = gen[8].GetLatestValue(controller, light, OutputSocketName2[8], debug);
-                if (startFrame > 0)
-                {
-                    frame = videoFileReader.ReadVideoFrame(startFrame);
-                    frameCtr = startFrame;
-                }
+                return imageData;
             }
+            MediaFileStartSkipCompleted = false;
 
+            return new ImageData();
 
-            if (frame == null)
-            {
-
-                try
-                {
-                    frame = videoFileReader.ReadVideoFrame();
-                    //frame.Save("G:\\frame.png");
-                }
-                catch (Exception e)
-                {
-                    videoFileReader.Close();
-                    videoFileReader.Dispose();
-                    videoFileReader = null;
-                }
-                frameCtr++;
-            }
         }
 
+        public void SetupGenerator(DiagramNode node, Diagram diagram, AppController controller)
+        {
+            var filename = gen[7].GetLatestStringValue(controller, null);
+            CurrentMediaFile = MediaFile.Open(filename);
+            
+        }
 
         public void EndLoop()
         {
-            if(frame!=null) frame.Dispose();
-            frame = null;
+
+            //if (bitmap != null) bitmap.Dispose();
+            //bitmap = null;
             //_screenCaptureEngine.ClearFrame();
+
+
+
+            //int i = 0;
+            //var file = MediaFile.Open(@"h:\Alan Partridge's Midmorning Matters - S02E04.mp4");
+            //while (file.Video.TryGetNextFrame(out var imageData))
+            //{
+            //    var b = imageData;
+            //    b.ToBitmap().SaveAsPng($@"H:\frame_{i++}.png");
+            //    // See the #Usage details for example .ToBitmap() implementation
+            //    // The .Save() method may be different depending on your graphics library
+            //}
+
+        }
+
+        public unsafe Color? GetColourForRectFromBitmapData(Rectangle rect, ImageData CurrentImageData)
+        {
+            Color? all;
+            int rTot = 0, bTot = 0, gTot = 0;
+
+            int PixelSize = CurrentImageData.PixelFormat == FFMediaToolkit.Graphics.ImagePixelFormat.Argb32 || CurrentImageData.PixelFormat == FFMediaToolkit.Graphics.ImagePixelFormat.Rgba32 ? 4 : 3;
+
+            int ct = 0;
+
+            {
+                for (int y = rect.Y; y < rect.Height + rect.Y; y += 1)
+                {
+                    var d = y * CurrentImageData.Stride;
+
+                    for (int x = rect.X; x < rect.Width + rect.X; x += 1)
+                    {
+                        if((d + x * PixelSize) > CurrentImageData.Data.Length) continue;
+                        bTot += CurrentImageData.Data[d + x * PixelSize];
+                        gTot += CurrentImageData.Data[d + x * PixelSize + 1];
+                        rTot += CurrentImageData.Data[d + x * PixelSize + 2];
+                        ct++; 
+                    }
+                }
+            }
+
+            all = ct > 0 ? Color.FromArgb(rTot / ct, gTot / ct, bTot / ct) : Color.Black;
+            return all;
         }
     }
 
-
-*/
 }
