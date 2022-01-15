@@ -250,7 +250,7 @@ namespace MaxLifxCore
         {
             lumPanel.Controls.Clear();
 
-            foreach (var l in _appController.Luminaires.OrderBy(x=>x.GetType().Name))
+            foreach (var l in _appController.Luminaires.OrderBy(x => x.GetType().Name).ThenBy(x => x.Label))
             {
                 var indivLumPanel = new Panel();
                 lumPanel.Controls.Add(indivLumPanel);
