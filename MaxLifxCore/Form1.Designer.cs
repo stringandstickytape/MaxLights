@@ -46,6 +46,11 @@
             this.linkLabel6 = new System.Windows.Forms.LinkLabel();
             this.linkLabel7 = new System.Windows.Forms.LinkLabel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.linkLabel8 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel9 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel10 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel11 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel13 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -156,9 +161,10 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(11, 24);
+            this.linkLabel1.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel1.Location = new System.Drawing.Point(9, 24);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(321, 25);
+            this.linkLabel1.Size = new System.Drawing.Size(245, 19);
             this.linkLabel1.TabIndex = 12;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "https://github.com/DarthAffe/RGB.NET";
@@ -167,9 +173,10 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(11, 49);
+            this.linkLabel2.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel2.Location = new System.Drawing.Point(9, 43);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(451, 25);
+            this.linkLabel2.Size = new System.Drawing.Size(344, 19);
             this.linkLabel2.TabIndex = 13;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "https://github.com/jasonpang/desktop-duplication-net";
@@ -178,9 +185,10 @@
             // linkLabel3
             // 
             this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(11, 76);
+            this.linkLabel3.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel3.Location = new System.Drawing.Point(9, 62);
             this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(332, 25);
+            this.linkLabel3.Size = new System.Drawing.Size(254, 19);
             this.linkLabel3.TabIndex = 14;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "https://github.com/kenkendk/ceenhttpd";
@@ -189,9 +197,10 @@
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(11, 101);
+            this.linkLabel4.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel4.Location = new System.Drawing.Point(9, 100);
             this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(360, 25);
+            this.linkLabel4.Size = new System.Drawing.Size(274, 19);
             this.linkLabel4.TabIndex = 15;
             this.linkLabel4.TabStop = true;
             this.linkLabel4.Text = "https://github.com/KSemenenko/ColorThief";
@@ -200,9 +209,10 @@
             // linkLabel5
             // 
             this.linkLabel5.AutoSize = true;
-            this.linkLabel5.Location = new System.Drawing.Point(11, 126);
+            this.linkLabel5.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel5.Location = new System.Drawing.Point(276, 62);
             this.linkLabel5.Name = "linkLabel5";
-            this.linkLabel5.Size = new System.Drawing.Size(286, 25);
+            this.linkLabel5.Size = new System.Drawing.Size(219, 19);
             this.linkLabel5.TabIndex = 16;
             this.linkLabel5.TabStop = true;
             this.linkLabel5.Text = "https://numerics.mathdotnet.com/";
@@ -210,9 +220,10 @@
             // linkLabel6
             // 
             this.linkLabel6.AutoSize = true;
-            this.linkLabel6.Location = new System.Drawing.Point(11, 151);
+            this.linkLabel6.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel6.Location = new System.Drawing.Point(274, 24);
             this.linkLabel6.Name = "linkLabel6";
-            this.linkLabel6.Size = new System.Drawing.Size(292, 25);
+            this.linkLabel6.Size = new System.Drawing.Size(221, 19);
             this.linkLabel6.TabIndex = 17;
             this.linkLabel6.TabStop = true;
             this.linkLabel6.Text = "https://github.com/naudio/NAudio";
@@ -221,9 +232,10 @@
             // linkLabel7
             // 
             this.linkLabel7.AutoSize = true;
-            this.linkLabel7.Location = new System.Drawing.Point(11, 176);
+            this.linkLabel7.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel7.Location = new System.Drawing.Point(9, 119);
             this.linkLabel7.Name = "linkLabel7";
-            this.linkLabel7.Size = new System.Drawing.Size(397, 25);
+            this.linkLabel7.Size = new System.Drawing.Size(301, 19);
             this.linkLabel7.TabIndex = 18;
             this.linkLabel7.TabStop = true;
             this.linkLabel7.Text = "https://github.com/WardBenjamin/SimplexNoise";
@@ -231,6 +243,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.linkLabel13);
+            this.groupBox1.Controls.Add(this.linkLabel11);
+            this.groupBox1.Controls.Add(this.linkLabel10);
+            this.groupBox1.Controls.Add(this.linkLabel9);
+            this.groupBox1.Controls.Add(this.linkLabel8);
             this.groupBox1.Controls.Add(this.linkLabel7);
             this.groupBox1.Controls.Add(this.linkLabel6);
             this.groupBox1.Controls.Add(this.linkLabel5);
@@ -240,10 +257,70 @@
             this.groupBox1.Controls.Add(this.linkLabel1);
             this.groupBox1.Location = new System.Drawing.Point(764, 1);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(502, 211);
+            this.groupBox1.Size = new System.Drawing.Size(502, 183);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "MaxLights is built on the hard work of:";
+            // 
+            // linkLabel8
+            // 
+            this.linkLabel8.AutoSize = true;
+            this.linkLabel8.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel8.Location = new System.Drawing.Point(9, 157);
+            this.linkLabel8.Name = "linkLabel8";
+            this.linkLabel8.Size = new System.Drawing.Size(263, 19);
+            this.linkLabel8.TabIndex = 19;
+            this.linkLabel8.TabStop = true;
+            this.linkLabel8.Text = "https://github.com/SixLabors/ImageSharp";
+            this.linkLabel8.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // linkLabel9
+            // 
+            this.linkLabel9.AutoSize = true;
+            this.linkLabel9.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel9.Location = new System.Drawing.Point(376, 43);
+            this.linkLabel9.Name = "linkLabel9";
+            this.linkLabel9.Size = new System.Drawing.Size(119, 19);
+            this.linkLabel9.TabIndex = 20;
+            this.linkLabel9.TabStop = true;
+            this.linkLabel9.Text = "https://rete.js.org/";
+            this.linkLabel9.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // linkLabel10
+            // 
+            this.linkLabel10.AutoSize = true;
+            this.linkLabel10.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel10.Location = new System.Drawing.Point(381, 81);
+            this.linkLabel10.Name = "linkLabel10";
+            this.linkLabel10.Size = new System.Drawing.Size(114, 19);
+            this.linkLabel10.TabIndex = 21;
+            this.linkLabel10.TabStop = true;
+            this.linkLabel10.Text = "https://vuejs.org/";
+            this.linkLabel10.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // linkLabel11
+            // 
+            this.linkLabel11.AutoSize = true;
+            this.linkLabel11.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel11.Location = new System.Drawing.Point(11, 138);
+            this.linkLabel11.Name = "linkLabel11";
+            this.linkLabel11.Size = new System.Drawing.Size(272, 19);
+            this.linkLabel11.TabIndex = 22;
+            this.linkLabel11.TabStop = true;
+            this.linkLabel11.Text = "https://github.com/radek-k/FFMediaToolkit";
+            this.linkLabel11.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // linkLabel13
+            // 
+            this.linkLabel13.AutoSize = true;
+            this.linkLabel13.Font = new System.Drawing.Font("Segoe UI", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.linkLabel13.Location = new System.Drawing.Point(9, 81);
+            this.linkLabel13.Name = "linkLabel13";
+            this.linkLabel13.Size = new System.Drawing.Size(265, 19);
+            this.linkLabel13.TabIndex = 24;
+            this.linkLabel13.TabStop = true;
+            this.linkLabel13.Text = "https://github.com/openhardwaremonitor";
+            this.linkLabel13.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // Form1
             // 
@@ -291,5 +368,10 @@
         private System.Windows.Forms.LinkLabel linkLabel6;
         private System.Windows.Forms.LinkLabel linkLabel7;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.LinkLabel linkLabel13;
+        private System.Windows.Forms.LinkLabel linkLabel11;
+        private System.Windows.Forms.LinkLabel linkLabel10;
+        private System.Windows.Forms.LinkLabel linkLabel9;
+        private System.Windows.Forms.LinkLabel linkLabel8;
     }
 }
