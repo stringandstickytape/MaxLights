@@ -1,6 +1,5 @@
 ﻿using FFMediaToolkit.Decoding;
 using FFMediaToolkit.Graphics;
-using LibVLCSharp.Shared;
 using MaxLifxCore;
 using MaxLifxCore.Controls;
 using MaxLifxCoreBulbController.Controllers;
@@ -46,7 +45,7 @@ namespace MaxLifxCore
 
         public Bitmap bitmap { get; set; }
 
-        public readonly decimal Version = 0.8m;
+        public readonly decimal Version = 0.9m;
         public Form1()
         {
             try
@@ -65,7 +64,11 @@ namespace MaxLifxCore
             _appController = new AppController(() => {
                 if (_appController.AppSettings.Port == 0) _appController.AppSettings.Port = int.Parse(tbPort.Text);
                 tbPort.Text = _appController.AppSettings.Port.ToString();
-                cbPcHardware.Checked = _appController.AppSettings?.EnablePCHardware ?? false;
+                cbA.Checked = _appController.AppSettings?.EnableASUS ?? false;
+                cbL.Checked = _appController.AppSettings?.EnableLogitech ?? false;
+                cbM.Checked = _appController.AppSettings?.EnableMSI ?? false;
+                cbC.Checked = _appController.AppSettings?.EnableCorsair ?? false;
+                
                 return 1;
             });
 
@@ -83,7 +86,7 @@ namespace MaxLifxCore
                 _appController.Luminaires.Add(luminaire);
             }
 
-            if (_appController.AppSettings.EnablePCHardware) InitRgbNet();
+            InitRgbNet();
 
             Controller.SetupNetwork();
 
@@ -163,12 +166,16 @@ namespace MaxLifxCore
 
         private void InitRgbNet()
         {
+            if (!_appController.AppSettings.EnableASUS && !_appController.AppSettings.EnableLogitech && !_appController.AppSettings.EnableMSI && !_appController.AppSettings.EnableCorsair) return;
+
+
+
             _appController.surface = new RGBSurface();
 
-            AttachProvider(_appController.surface, new MsiDeviceProvider());
-            AttachProvider(_appController.surface, new AsusDeviceProvider());
-            AttachProvider(_appController.surface, new CorsairDeviceProvider());
-            AttachProvider(_appController.surface, new LogitechDeviceProvider());
+            if(_appController.AppSettings.EnableMSI) AttachProvider(_appController.surface, new MsiDeviceProvider());
+            if (_appController.AppSettings.EnableASUS) AttachProvider(_appController.surface, new AsusDeviceProvider());
+            if (_appController.AppSettings.EnableCorsair) AttachProvider(_appController.surface, new CorsairDeviceProvider());
+            if (_appController.AppSettings.EnableLogitech) AttachProvider(_appController.surface, new LogitechDeviceProvider());
 
             //var d = new DMXDeviceProvider();
             //var dd = new E131DMXDeviceDefinition("192.168.2.4");
@@ -421,12 +428,6 @@ namespace MaxLifxCore
             _appController.SaveSettings();
         }
 
-        private void cbPcHardware_CheckedChanged(object sender, EventArgs e)
-        {
-            _appController.AppSettings.EnablePCHardware = cbPcHardware.Checked;
-            _appController.SaveSettings();
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             var f = new NewDevice();
@@ -491,6 +492,30 @@ namespace MaxLifxCore
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(((System.Windows.Forms.LinkLabel)sender).Text) { UseShellExecute = true });
+        }
+
+        private void cbM_CheckedChanged(object sender, EventArgs e)
+        {
+            _appController.AppSettings.EnableMSI = cbM.Checked;
+            _appController.SaveSettings();
+        }
+
+        private void cbA_CheckedChanged(object sender, EventArgs e)
+        {
+            _appController.AppSettings.EnableASUS = cbA.Checked;
+            _appController.SaveSettings();
+        }
+
+        private void cbC_CheckedChanged(object sender, EventArgs e)
+        {
+            _appController.AppSettings.EnableCorsair = cbC.Checked;
+            _appController.SaveSettings();
+        }
+
+        private void cbL_CheckedChanged(object sender, EventArgs e)
+        {
+            _appController.AppSettings.EnableLogitech = cbL.Checked;
+            _appController.SaveSettings();
         }
 
         //private void button5_Click(object sender, EventArgs e)

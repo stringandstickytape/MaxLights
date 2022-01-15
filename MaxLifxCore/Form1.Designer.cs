@@ -33,7 +33,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tbPort = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.cbPcHardware = new System.Windows.Forms.CheckBox();
             this.lumPanel = new System.Windows.Forms.Panel();
             this.button5 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -51,6 +50,11 @@
             this.linkLabel10 = new System.Windows.Forms.LinkLabel();
             this.linkLabel11 = new System.Windows.Forms.LinkLabel();
             this.linkLabel13 = new System.Windows.Forms.LinkLabel();
+            this.cbM = new System.Windows.Forms.CheckBox();
+            this.cbA = new System.Windows.Forms.CheckBox();
+            this.cbC = new System.Windows.Forms.CheckBox();
+            this.cbL = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -101,17 +105,6 @@
             this.button4.Text = "Launch Web UI";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // cbPcHardware
-            // 
-            this.cbPcHardware.AutoSize = true;
-            this.cbPcHardware.Location = new System.Drawing.Point(12, 222);
-            this.cbPcHardware.Name = "cbPcHardware";
-            this.cbPcHardware.Size = new System.Drawing.Size(436, 29);
-            this.cbPcHardware.TabIndex = 6;
-            this.cbPcHardware.Text = "Enable PC Hardware Support (requires app restart)";
-            this.cbPcHardware.UseVisualStyleBackColor = true;
-            this.cbPcHardware.CheckedChanged += new System.EventHandler(this.cbPcHardware_CheckedChanged);
             // 
             // lumPanel
             // 
@@ -322,17 +315,74 @@
             this.linkLabel13.Text = "https://github.com/openhardwaremonitor";
             this.linkLabel13.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // cbM
+            // 
+            this.cbM.AutoSize = true;
+            this.cbM.Location = new System.Drawing.Point(429, 222);
+            this.cbM.Name = "cbM";
+            this.cbM.Size = new System.Drawing.Size(69, 29);
+            this.cbM.TabIndex = 20;
+            this.cbM.Text = "MSI";
+            this.cbM.UseVisualStyleBackColor = true;
+            this.cbM.CheckedChanged += new System.EventHandler(this.cbM_CheckedChanged);
+            // 
+            // cbA
+            // 
+            this.cbA.AutoSize = true;
+            this.cbA.Location = new System.Drawing.Point(504, 222);
+            this.cbA.Name = "cbA";
+            this.cbA.Size = new System.Drawing.Size(82, 29);
+            this.cbA.TabIndex = 21;
+            this.cbA.Text = "ASUS";
+            this.cbA.UseVisualStyleBackColor = true;
+            this.cbA.CheckedChanged += new System.EventHandler(this.cbA_CheckedChanged);
+            // 
+            // cbC
+            // 
+            this.cbC.AutoSize = true;
+            this.cbC.Location = new System.Drawing.Point(592, 222);
+            this.cbC.Name = "cbC";
+            this.cbC.Size = new System.Drawing.Size(93, 29);
+            this.cbC.TabIndex = 22;
+            this.cbC.Text = "Corsair";
+            this.cbC.UseVisualStyleBackColor = true;
+            this.cbC.CheckedChanged += new System.EventHandler(this.cbC_CheckedChanged);
+            // 
+            // cbL
+            // 
+            this.cbL.AutoSize = true;
+            this.cbL.Location = new System.Drawing.Point(691, 222);
+            this.cbL.Name = "cbL";
+            this.cbL.Size = new System.Drawing.Size(105, 29);
+            this.cbL.TabIndex = 23;
+            this.cbL.Text = "Logitech";
+            this.cbL.UseVisualStyleBackColor = true;
+            this.cbL.CheckedChanged += new System.EventHandler(this.cbL_CheckedChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 223);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(411, 25);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "Enable PC Hardware (requires restart after change):";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1271, 1250);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cbL);
+            this.Controls.Add(this.cbC);
+            this.Controls.Add(this.cbA);
+            this.Controls.Add(this.cbM);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.lumPanel);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button5);
-            this.Controls.Add(this.cbPcHardware);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.tbPort);
             this.Controls.Add(this.label1);
@@ -355,7 +405,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbPort;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.CheckBox cbPcHardware;
         private System.Windows.Forms.Panel lumPanel;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -373,5 +422,10 @@
         private System.Windows.Forms.LinkLabel linkLabel10;
         private System.Windows.Forms.LinkLabel linkLabel9;
         private System.Windows.Forms.LinkLabel linkLabel8;
+        private System.Windows.Forms.CheckBox cbM;
+        private System.Windows.Forms.CheckBox cbA;
+        private System.Windows.Forms.CheckBox cbC;
+        private System.Windows.Forms.CheckBox cbL;
+        private System.Windows.Forms.Label label2;
     }
 }
