@@ -48,24 +48,45 @@ namespace MaxLifxCore
         public readonly decimal Version = 0.9m;
         public Form1()
         {
-            AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
+            if (File.Exists("StartupLog.txt"))
+                File.Delete("StartupLog.txt");
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"1" });
+
+            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
             {
-                Debug.WriteLine(eventArgs.Exception.ToString());
+                var ex = (Exception)(eventArgs.ExceptionObject);
+                File.AppendAllText("UnhandledExceptions.txt", $"{DateTime.Now} : {eventArgs.ExceptionObject.ToString()}{Environment.NewLine}");
+                File.AppendAllText("UnhandledExceptions.txt", $"{DateTime.Now} : {ex.StackTrace}{Environment.NewLine}");
+                Debug.WriteLine(eventArgs.ExceptionObject.ToString());
+
+                MessageBox.Show("There was an unhandled exception, and MaxLights will now exit. Details of the exception have been writted to UnhandledExceptions.txt in the MaxLights folder.");
             };
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"2" });
 
             try
             {
                 CheckForNewVersion();
+
+                File.AppendAllLines("StartupLog.txt", new string[] { $"3" });
             }
             catch (Exception ex)
             {
-
+                File.AppendAllLines("StartupLog.txt", new string[] { $"3=>fail check new version" });
             }
 
+            File.AppendAllLines("StartupLog.txt", new string[] { $"4" });
+
             InitializeComponent();
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"5" });
+
             bitmap = new Bitmap(pictureBox1.Width, 1);
             pictureBox1.Image = bitmap;
-            
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"6" });
+
             _appController = new AppController(() => {
                 if (_appController.AppSettings.Port == 0) _appController.AppSettings.Port = int.Parse(tbPort.Text);
                 tbPort.Text = _appController.AppSettings.Port.ToString();
@@ -77,25 +98,40 @@ namespace MaxLifxCore
                 return 1;
             });
 
+            File.AppendAllLines("StartupLog.txt", new string[] { $"7" });
+
             _appController.LoadSettings();
 
+            File.AppendAllLines("StartupLog.txt", new string[] { $"8" });
+
             _appController.Form = this;
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"9" });
 
             foreach (var luminaire in _appController.AppSettings.StaticWledDevices)
             {
                 _appController.Luminaires.Add(luminaire);
+                File.AppendAllLines("StartupLog.txt", new string[] { $"10: add device" });
             }
 
             foreach (var luminaire in _appController.AppSettings.StaticLifxDevices)
             {
                 _appController.Luminaires.Add(luminaire);
+                File.AppendAllLines("StartupLog.txt", new string[] { $"11: add device" });
             }
+            File.AppendAllLines("StartupLog.txt", new string[] { $"12: pre RGBNet init" });
 
             InitRgbNet();
 
+            File.AppendAllLines("StartupLog.txt", new string[] { $"13" });
+
             Controller.SetupNetwork();
 
+            File.AppendAllLines("StartupLog.txt", new string[] { $"14" });
+
             _appController.Luminaires.CollectionChanged += listChanged;
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"15" });
 
             Controller.UdpDiscoveryAsyncListen(ref _appController.Luminaires, ref _appController.LockObj, () =>
             {
@@ -103,18 +139,32 @@ namespace MaxLifxCore
                 return 0;
             });
 
+            File.AppendAllLines("StartupLog.txt", new string[] { $"16" });
 
             var serverCore = new Webserver.WebserverCore(ref _appController);
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"17" });
+
             serverCore.InitWebserver();
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"18" });
 
             engine = new SpectrumAnalyserEngine(ref _appController);
             engine.StartCapture();
 
+            File.AppendAllLines("StartupLog.txt", new string[] { $"19" });
+
             _appController.SpectrumAnalyserEngine = engine;
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"20" });
 
             _appController.Run(ref Controller);
 
+            File.AppendAllLines("StartupLog.txt", new string[] { $"21" });
+
             UpdateUIBulbCount();
+
+            File.AppendAllLines("StartupLog.txt", new string[] { $"22: Startup completed" });
         }
 
         private void CheckForNewVersion()
