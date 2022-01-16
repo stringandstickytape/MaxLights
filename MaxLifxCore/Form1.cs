@@ -48,6 +48,11 @@ namespace MaxLifxCore
         public readonly decimal Version = 0.9m;
         public Form1()
         {
+            AppDomain.CurrentDomain.FirstChanceException += (sender, eventArgs) =>
+            {
+                Debug.WriteLine(eventArgs.Exception.ToString());
+            };
+
             try
             {
                 CheckForNewVersion();
