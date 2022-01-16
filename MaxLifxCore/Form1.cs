@@ -249,13 +249,13 @@ namespace MaxLifxCore
         private void UpdateUIBulbCount()
         {
             lumPanel.Controls.Clear();
-
-            foreach (var l in _appController.Luminaires.OrderBy(x => x.GetType().Name).ThenBy(x => x.Label))
+            var orderedList = _appController.Luminaires.OrderBy(x => x.GetType().Name).ThenBy(x => x.Label).ToList();
+            foreach (var l in orderedList)
             {
                 var indivLumPanel = new Panel();
                 lumPanel.Controls.Add(indivLumPanel);
 
-                indivLumPanel.Location = new System.Drawing.Point { X = 0, Y = _appController.Luminaires.IndexOf(l) * 36 };
+                indivLumPanel.Location = new System.Drawing.Point { X = 0, Y = orderedList.IndexOf(l) * 36 };
                 indivLumPanel.Height = 36;
                 indivLumPanel.Width = lumPanel.Width;
 

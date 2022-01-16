@@ -305,9 +305,9 @@ namespace MaxLifxCore.Controls
             // Read the wave data
 
             var start = 0;
-            start *= channels * sampleRate;
+            //start *= channels * sampleRate;
             var length = 0;
-            length *= channels * sampleRate;
+            //length *= channels * sampleRate;
 
             if (start >= sampleCount)
             {
@@ -360,8 +360,9 @@ namespace MaxLifxCore.Controls
                 
                 Array.Copy(samples, 0, sampleBuf, sampleCtr, samples.Length);
                 sampleCtr += samples.Length;
-                
-                var tempos = getIntervals(getPeaks(sampleBuf, sampleCtr));
+
+                var peaks = getPeaks(sampleBuf, sampleCtr);
+                var tempos = getIntervals(peaks);
 
                 if (tempos.Any())
                 {
@@ -369,7 +370,7 @@ namespace MaxLifxCore.Controls
                     //System.Diagnostics.Debug.WriteLine($"{b}");
                     sampleCtr = 0;
                     prevResults.Enqueue(b);
-                    if (prevResults.Count > 20) prevResults.Dequeue();
+                    if (prevResults.Count > 30) prevResults.Dequeue();
                     if (prevResults.Any())
                     {
                         BPM = prevResults.OrderBy(x => x).Skip(prevResults.Count / 2).Take(1).ToList()[0];
